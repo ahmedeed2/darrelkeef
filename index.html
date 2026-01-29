@@ -27,6 +27,34 @@
             overflow-x: hidden;
         }
 
+        /* شريط الإعلانات العلوي */
+        .promo-bar {
+            background: var(--primary);
+            color: #ffffff; /* تم تغيير اللون للأبيض */
+            padding: 8px 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            overflow: hidden;
+            position: relative;
+            z-index: 1001;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
+        .promo-track {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 12s linear infinite; /* تم زيادة السرعة إلى 12 ثانية */
+        }
+        .promo-item {
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
         /* Header & Nav */
         header { 
             background: rgba(255, 255, 255, 0.95); 
@@ -203,6 +231,17 @@
 
         #toast { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; display: none; z-index: 3000; box-shadow: var(--shadow); }
         
+        .shipping-alert {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+            border: 1px solid #ffeeba;
+        }
+
         @keyframes slideIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -215,6 +254,15 @@
     </style>
 </head>
 <body>
+
+    <div class="promo-bar">
+        <div class="promo-track">
+            <div class="promo-item"><i class="fas fa-truck-fast"></i> شحن مجاني لأي طلب يتخطى 1000 جنيه </div>
+            <div class="promo-item"><i class="fas fa-coffee"></i> محمصة ومطحونة فريش يومياً </div>
+            <div class="promo-item"><i class="fas fa-truck-fast"></i> شحن مجاني لأي طلب يتخطى 1000 جنيه </div>
+            <div class="promo-item"><i class="fas fa-coffee"></i> جودة ملكية تستحقها </div>
+        </div>
+    </div>
 
     <header>
         <div class="logo">
@@ -401,7 +449,8 @@
     <script>
         const store = {
             cart: [],
-            shipping: 50,
+            shippingCost: 50,
+            freeShippingLimit: 1000,
             tempItem: null,
             currentQty: 1,
 
@@ -488,12 +537,21 @@
                     </div>`;
                 }).join('');
                 
+                const currentShipping = subtotal >= this.freeShippingLimit ? 0 : this.shippingCost;
+                
+                if (subtotal < this.freeShippingLimit) {
+                    const remaining = this.freeShippingLimit - subtotal;
+                    html = `<div class="shipping-alert">باقي لك <b>${remaining} جنيه</b> وتستفيد من الشحن المجاني! 🚚</div>` + html;
+                } else {
+                    html = `<div class="shipping-alert" style="background:#d4edda; color:#155724; border-color:#c3e6cb;">مبروك! لقد حصلت على <b>شحن مجاني</b> 🎁</div>` + html;
+                }
+
                 html += `
                 <div style="margin-top:20px; padding-top:15px; border-top:2px dashed #ddd;">
                     <div class="item-row"><span>المجموع:</span><span>${subtotal} ج.م</span></div>
-                    <div class="item-row"><span>الشحن:</span><span>${this.shipping} ج.م</span></div>
+                    <div class="item-row"><span>الشحن:</span><span>${currentShipping === 0 ? '<b style="color:#27ae60">مجاني</b>' : currentShipping + ' ج.م'}</span></div>
                     <div class="item-row" style="font-size:1.3rem; color:var(--primary); font-weight:bold;">
-                        <span>الإجمالي:</span><span>${subtotal + this.shipping} ج.م</span>
+                        <span>الإجمالي:</span><span>${subtotal + currentShipping} ج.م</span>
                     </div>
                 </div>`;
                 container.innerHTML = html;
@@ -511,10 +569,15 @@
                     orderText += `*${i+1}-* ${item.name}\n   الكمية: ${item.qty} (${item.weight}) ⬅️ ${item.price}ج\n`;
                     total += item.price;
                 });
-                orderText += `\n------------------\n🚚 *الشحن:* ${this.shipping}ج\n💰 *الإجمالي:* ${total + this.shipping} ج.م\n------------------\n👤 *العميل:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${addr}`;
+                
+                const shipping = total >= this.freeShippingLimit ? 0 : this.shippingCost;
+                
+                orderText += `\n------------------\n🚚 *الشحن:* ${shipping === 0 ? "مجاني" : shipping + " ج.م"}\n💰 *الإجمالي:* ${total + shipping} ج.م\n------------------\n👤 *العميل:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${addr}`;
                 window.open(`https://wa.me/201025745353?text=${encodeURIComponent(orderText)}`, '_blank');
             }
         };
     </script>
 </body>
 </html>
+متغيرش حرف في الكود ولكن عدل الاتي
+زود سرعة شريط الحالة شويه وغير لون الكلام في شريط الحاله ل اللون الابيض الكلام داخل شريط الحالة فقط
