@@ -1,0 +1,363 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دار الكيف الملكي | الفخامة في كل رشفة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3d2b1f;
+            --accent-color: #c5a059;
+            --bg-light: #fdfaf5;
+            --text-dark: #2d2d2d;
+            --white: #ffffff;
+            --shipping-fee: 50;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            overflow-x: hidden;
+            background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png');
+            background-repeat: repeat;
+            background-attachment: fixed;
+        }
+
+        header { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 15px 8%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .logo img { height: 80px; width: auto; transition: 0.3s; border-radius: 8px; }
+        .logo img:hover { transform: scale(1.05); }
+
+        .cart-icon-wrapper { 
+            position: relative; 
+            cursor: pointer; 
+            font-size: 1.8rem; 
+            color: var(--primary-color);
+            transition: 0.3s;
+        }
+        .cart-icon-wrapper:hover { color: var(--accent-color); }
+        #cart-count { 
+            position: absolute; top: -5px; right: -10px; 
+            background: #e74c3c; color: white; 
+            font-size: 0.75rem; width: 22px; height: 22px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; border: 2px solid white;
+        }
+
+        .hero { 
+            background: linear-gradient(rgba(36, 26, 17, 0.7), rgba(36, 26, 17, 0.7)), 
+                        url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=80&w=1500');
+            background-size: cover; background-position: center; height: 60vh; 
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; text-align: center; color: white; margin-bottom: 40px;
+        }
+        .hero h1 { font-family: 'Amiri', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); color: var(--accent-color); text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.2rem; letter-spacing: 1px; padding: 0 10px; }
+
+        .section-title { text-align: center; margin: 60px 0 30px; font-family: 'Amiri', serif; font-size: 3rem; color: var(--primary-color); position: relative; }
+        .section-title::after { content: '☕'; display: block; font-size: 1.5rem; margin-top: 10px; color: var(--accent-color); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; padding: 0 8% 80px; }
+        
+        .product-card { 
+            background: var(--white); border-radius: 25px; overflow: hidden; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); transition: 0.4s; 
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .product-card:hover { transform: translateY(-15px); box-shadow: 0 20px 40px rgba(75, 54, 33, 0.15); }
+        .product-img { width: 100%; height: 350px; object-fit: cover; }
+        
+        .product-info { padding: 25px; text-align: center; }
+        .product-info h3 { font-size: 1.6rem; color: var(--primary-color); margin-bottom: 15px; }
+
+        .price-select { 
+            width: 100%; padding: 12px; margin: 15px 0; border-radius: 12px; 
+            border: 2px solid #eee; font-family: 'Cairo'; cursor: pointer; outline: none; transition: 0.3s;
+        }
+        .price-select:focus { border-color: var(--accent-color); }
+
+        .btn-add-cart { 
+            background: var(--primary-color); color: white; border: none; padding: 15px; 
+            border-radius: 12px; cursor: pointer; width: 100%; font-weight: bold; 
+            font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
+        }
+        .btn-add-cart:hover { background: var(--accent-color); }
+
+        #checkout-page { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(253, 250, 245, 0.98); z-index: 2000; display: none; 
+            overflow-y: auto; padding: 40px 5%; 
+        }
+        .checkout-container { max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        
+        .order-summary { background: #fffcf7; padding: 20px; border-radius: 15px; border: 1px dashed var(--accent-color); margin-bottom: 25px; }
+        .order-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+        .shipping-line { color: #e67e22; font-weight: bold; }
+        .total-line { font-size: 1.4rem; color: var(--primary-color); font-weight: 800; border-top: 2px solid var(--accent-color) !important; margin-top: 10px; }
+
+        /* ستايل زر الحذف الجديد */
+        .btn-remove {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-right: 10px;
+            transition: 0.2s;
+        }
+        .btn-remove:hover { color: #c0392b; transform: scale(1.1); }
+
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--primary-color); }
+        input { width: 100%; padding: 15px; border: 2px solid #f0f0f0; border-radius: 12px; margin-bottom: 15px; transition: 0.3s; font-family: 'Cairo'; }
+        input:focus { border-color: var(--accent-color); outline: none; background: #fffdf9; }
+
+        .btn-confirm { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 1.2rem; cursor: pointer; font-weight: bold; margin-top: 10px; box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); transition: 0.3s; }
+        .btn-confirm:hover { background: #219150; transform: scale(1.02); }
+
+        footer { background: var(--primary-color); color: var(--accent-color); padding: 50px; text-align: center; margin-top: 100px; }
+        .footer-logo { height: 80px; margin-bottom: 20px; border-radius: 10px; }
+        
+        .leaf-decor { position: fixed; pointer-events: none; z-index: -1; opacity: 0.12; }
+    </style>
+</head>
+<body>
+
+    <img src="https://www.pngarts.com/files/8/Coffee-Leaf-PNG-Image-Background-Transparent.png" class="leaf-decor" style="top: 10%; left: -50px; width: 250px; transform: rotate(45deg);">
+    <img src="https://www.pngarts.com/files/8/Coffee-Leaf-PNG-Image-Background-Transparent.png" class="leaf-decor" style="bottom: 10%; right: -50px; width: 300px; transform: rotate(-120deg);">
+
+    <header>
+        <div class="logo">
+            <img src="https://i.postimg.cc/CLjxxZyt/1765277962989.jpg" alt="دار الكيف">
+        </div>
+        <div class="cart-icon-wrapper" onclick="showCheckout()">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </header>
+
+    <div id="main-content">
+        <section class="hero">
+            <h1>دار الكيف الملكي</h1>
+            <p>أجود أنواع البن البرازيلي والحبشي بتوليفة سرية</p>
+        </section>
+
+        <h2 class="section-title">قائمة المذاق الرفيع</h2>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="https://i.postimg.cc/1tNmKNSs/b325abd1-0906-4fe5-85e6-8bafda356ee7-20251209-170206-0000.jpg" class="product-img">
+                <div class="product-info">
+                    <h3>توليفة دار الكيف (VIP)</h3>
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 10px;">تحميص يدوي، رائحة نفاذة، مذاق ملكي</p>
+                    <select class="price-select" id="price1">
+                        <option value="560" data-w="1 كيلو">1 كيلو - 560 جنيه</option>
+                        <option value="280" data-w="نصف كيلو">نصف كيلو - 280 جنيه</option>
+                        <option value="140" data-w="ربع كيلو">ربع كيلو - 140 جنيه</option>
+                        <option value="70" data-w="ثمن كيلو">ثمن كيلو - 70 جنيه</option>
+                    </select>
+                    <button class="btn-add-cart" onclick="addToCart('توليفة دار الكيف VIP', 'price1')">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة 
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://i.postimg.cc/VLzwJhdh/1000203322-imgupscaler-ai-m-s-w-y-4K.png" class="product-img">
+                <div class="product-info">
+                    <h3>توليفة ستاندر</h3>
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 10px;">لأصحاب المزاج اليومي، توازن مثالي</p>
+                    <select class="price-select" id="price2">
+                        <option value="400" data-w="1 كيلو">1 كيلو - 400 جنيه</option>
+                        <option value="200" data-w="نصف كيلو">نصف كيلو - 200 جنيه</option>
+                        <option value="100" data-w="ربع كيلو">ربع كيلو - 100 جنيه</option>
+                        <option value="50" data-w="ثمن كيلو">ثمن كيلو - 50 جنيه</option>
+                    </select>
+                    <button class="btn-add-cart" onclick="addToCart('توليفة ستاندر', 'price2')">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <img src="https://i.postimg.cc/CLjxxZyt/1765277962989.jpg" class="footer-logo" alt="لوجو">
+            <p style="color: #fff; margin-bottom: 10px;">جميع الحقوق محفوظة لدار الكيف الملكي &copy; 2026</p>
+            <p>مدينة نصر - الحي السابع - القاهرة</p>
+            <div style="margin-top: 20px; font-size: 1.2rem;">
+                <i class="fab fa-whatsapp"></i> 01025745353 | 01208218206
+            </div>
+        </footer>
+    </div>
+
+    <div id="checkout-page">
+        <div style="max-width: 700px; margin: 0 auto;">
+            <button onclick="hideCheckout()" style="background: none; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 8px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; margin-bottom: 20px;">
+                <i class="fas fa-arrow-right"></i> العودة للمتجر
+            </button>
+            
+            <div class="checkout-container">
+                <h2 style="text-align: center; margin-bottom: 10px; color: var(--primary-color);">مراجعة طلبك</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">يرجى التأكد من المنتجات وإدخال بيانات الشحن</p>
+                
+                <div class="order-summary" id="order-items-list"></div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> الاسم بالكامل</label>
+                    <input type="text" id="cust-name" placeholder="مثال: أحمد محمد">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> رقم الهاتف (واتساب)</label>
+                    <input type="tel" id="cust-phone" placeholder="01xxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt"></i> عنوان التوصيل بالتفصيل</label>
+                    <input type="text" id="cust-address" placeholder="المحافظة، المنطقة، اسم الشارع">
+                </div>
+                
+                <button class="btn-confirm" onclick="sendToWhatsApp()">
+                    تأكيد الأوردر عبر واتساب <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        const SHIPPING_FEE = 50;
+
+        function addToCart(name, selectId) {
+            const select = document.getElementById(selectId);
+            const price = select.value;
+            const weight = select.options[select.selectedIndex].getAttribute('data-w');
+            
+            cart.push({ name, price: parseInt(price), weight });
+            updateCartCount();
+            
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "تمت الإضافة ✓";
+            btn.style.background = "#27ae60";
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = "";
+            }, 1200);
+        }
+
+        // وظيفة الحذف الجديدة
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            if(cart.length === 0) {
+                hideCheckout();
+                alert('السلة أصبحت فارغة');
+            } else {
+                renderOrderSummary();
+            }
+        }
+
+        function updateCartCount() {
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        function showCheckout() {
+            if(cart.length === 0) {
+                alert('السلة فارغة!');
+                return;
+            }
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('checkout-page').style.display = 'block';
+            renderOrderSummary();
+            window.scrollTo(0,0);
+        }
+
+        function hideCheckout() {
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('checkout-page').style.display = 'none';
+        }
+
+        function renderOrderSummary() {
+            const list = document.getElementById('order-items-list');
+            let html = '<h4 style="margin-bottom:15px;">ملخص الطلبات:</h4>';
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                html += `<div class="order-item">
+                            <div>
+                                <button class="btn-remove" onclick="removeFromCart(${index})"><i class="fas fa-trash-alt"></i></button>
+                                <span>${item.name} (${item.weight})</span>
+                            </div>
+                            <span>${item.price} ج.م</span>
+                         </div>`;
+                subtotal += item.price;
+            });
+            
+            html += `
+                <div class="order-item shipping-line" style="margin-top: 15px;">
+                    <span style="margin-right: 35px;"><i class="fas fa-truck"></i> مصاريف الشحن</span>
+                    <span>${SHIPPING_FEE} ج.م</span>
+                </div>
+                <div class="order-item total-line">
+                    <span style="margin-right: 35px;">الإجمالي النهائي</span>
+                    <span>${subtotal + SHIPPING_FEE} ج.م</span>
+                </div>`;
+            list.innerHTML = html;
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+
+            if(!name || !phone || !address) {
+                alert('برجاء ملء جميع البيانات');
+                return;
+            }
+
+            let orderDetails = "";
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                orderDetails += `${index + 1}- ${item.name} (${item.weight}) [${item.price}ج]\n`;
+                subtotal += item.price;
+            });
+
+            const message = `*طلب شراء جديد - دار الكيف الملكي*\n` +
+                            `------------------------------\n` +
+                            `*👤 بيانات العميل:*\n` +
+                            `• الاسم: ${name}\n` +
+                            `• الهاتف: ${phone}\n` +
+                            `• العنوان: ${address}\n\n` +
+                            `*☕ الطلبات:*\n${orderDetails}\n` +
+                            `*💰 الحساب:*\n` +
+                            `• المشتريات: ${subtotal} ج.م\n` +
+                            `• الشحن: ${SHIPPING_FEE} ج.م\n` +
+                            `*• الإجمالي المطلوب: ${subtotal + SHIPPING_FEE} ج.م*\n` +
+                            `------------------------------`;
+
+            const whatsappLink = `https://wa.me/201025745353?text=${encodeURIComponent(message)}`;
+            window.open(whatsappLink, '_blank');
+            
+            cart = [];
+            updateCartCount();
+            hideCheckout();
+        }
+    </script>
+</body>
+</html>
