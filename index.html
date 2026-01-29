@@ -11,7 +11,7 @@
         :root {
             --primary: #3d2b1f;
             --accent: #c5a059;
-            --bg: #ffffff; /* تم التعديل للأبيض السادة */
+            --bg: #ffffff;
             --white: #ffffff;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
             --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -25,7 +25,6 @@
             background-color: var(--bg); 
             color: #333; 
             overflow-x: hidden;
-            /* تم حذف صورة الخلفية المنقوشة */
         }
 
         /* Header & Nav */
@@ -78,10 +77,8 @@
         }
         .hero h1 { font-family: 'Amiri', serif; font-size: 3.5rem; color: var(--accent); margin-bottom: 5px; }
 
-        /* About & Gallery Section */
-        .about-section {
-            max-width: 1100px; margin: 60px auto; padding: 0 20px; text-align: center;
-        }
+        /* About Section */
+        .about-section { max-width: 1100px; margin: 60px auto; padding: 0 20px; text-align: center; }
         .about-content {
             background: white; padding: 40px; border-radius: 30px; box-shadow: var(--shadow);
             border: 1px solid rgba(197, 160, 89, 0.2); margin-bottom: 40px;
@@ -92,43 +89,33 @@
         .brand-gallery {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 30px;
         }
-        .gallery-item {
-            height: 250px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow);
-        }
+        .gallery-item { height: 250px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
         .gallery-item:hover img { transform: scale(1.1); }
 
         .section-title { text-align: center; margin: 50px 0 30px; font-family: 'Amiri', serif; font-size: 2.8rem; color: var(--primary); }
 
-        /* المنتجات */
+        /* Products */
         .products-container {
-            max-width: 1100px;
-            margin: 0 auto 80px;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px;
+            max-width: 1100px; margin: 0 auto 80px; padding: 0 15px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
         }
 
         .product-card { 
             background: var(--white); border-radius: 20px; overflow: hidden; 
             box-shadow: var(--shadow); transition: var(--transition);
             border: 1px solid rgba(197, 160, 89, 0.1);
-            display: flex; flex-direction: column;
-            position: relative;
+            display: flex; flex-direction: column; position: relative;
         }
         .product-card:hover { transform: translateY(-8px); }
 
-        /* شارة الخصم */
         .discount-badge {
             position: absolute; top: 10px; right: 10px;
             background: var(--discount-bg); color: white;
             padding: 4px 12px; border-radius: 50px;
             font-size: 0.75rem; font-weight: bold; z-index: 5;
-            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
         }
 
-        /* شريط السعر فوق الصورة */
         .price-tag-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
             background: linear-gradient(transparent, rgba(0,0,0,0.7));
@@ -150,36 +137,42 @@
         }
         .btn-add-cart:hover { background: var(--accent); color: var(--primary); }
 
-        @media (max-width: 768px) {
-            .products-container { gap: 12px; padding: 0 10px; }
-            .product-img-wrapper { height: 180px; }
-            .hero h1 { font-size: 2.2rem; }
-            .header-title { font-size: 1rem; }
-            .product-info h3 { font-size: 0.95rem; }
-            .btn-add-cart { padding: 8px 12px; font-size: 0.8rem; min-width: 100px; }
-            .brand-gallery { grid-template-columns: repeat(2, 1fr); }
-            .about-content { padding: 25px; }
-        }
-
-        /* Modal & UI Elements */
+        /* Quantity & Options Modal */
         #options-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); display: none; justify-content: center;
-            align-items: center; z-index: 3000; backdrop-filter: blur(5px);
+            align-items: center; z-index: 3000; backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: var(--white); width: 90%; max-width: 400px;
+            background: var(--white); width: 90%; max-width: 420px;
             padding: 30px; border-radius: 25px; position: relative;
-            animation: slideIn 0.3s ease;
+            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .modal-content h2 { font-family: 'Amiri', serif; color: var(--primary); margin-bottom: 20px; text-align: center; }
+        .modal-content h2 { font-family: 'Amiri', serif; color: var(--primary); margin-bottom: 5px; text-align: center; }
+        .modal-subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 20px; }
+        
         .option-group { margin-bottom: 15px; }
         .option-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--primary); font-size: 0.9rem; }
         .modal-select { 
             width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #f0f0f0;
-            font-family: 'Cairo'; background: #fafafa; outline: none;
+            font-family: 'Cairo'; background: #fafafa; outline: none; transition: 0.3s;
         }
+        .modal-select:focus { border-color: var(--accent); }
 
+        /* Quantity Selector */
+        .qty-container {
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+            margin: 20px 0; background: #f9f9f9; padding: 10px; border-radius: 15px;
+        }
+        .qty-btn {
+            width: 40px; height: 40px; border-radius: 10px; border: none;
+            background: var(--primary); color: white; cursor: pointer;
+            font-size: 1.2rem; transition: 0.2s;
+        }
+        .qty-btn:active { transform: scale(0.9); }
+        #qty-val { font-size: 1.2rem; font-weight: bold; color: var(--primary); min-width: 30px; text-align: center; }
+
+        /* Footer */
         footer { background: var(--primary); color: var(--accent); padding: 60px 20px 30px; text-align: center; }
         .footer-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: right; margin-bottom: 40px; }
         .footer-section h4 { font-family: 'Amiri', serif; font-size: 1.5rem; margin-bottom: 20px; border-bottom: 1px solid var(--accent); display: inline-block; }
@@ -203,12 +196,22 @@
         .summary-list { margin-bottom: 25px; border-radius: 15px; background: #fffcf8; padding: 15px; }
         .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
         .remove-btn { color: #ff4757; background: none; border: none; cursor: pointer; padding: 5px; }
-        input { width: 100%; padding: 14px; border: 2px solid #f1f1f1; border-radius: 12px; font-family: 'Cairo'; margin-bottom: 18px; }
-        .btn-confirm { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
+        input { width: 100%; padding: 14px; border: 2px solid #f1f1f1; border-radius: 12px; font-family: 'Cairo'; margin-bottom: 18px; outline: none; }
+        input:focus { border-color: var(--accent); }
+        .btn-confirm { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-confirm:hover { background: #219150; }
 
-        #toast { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; display: none; z-index: 3000; }
+        #toast { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 12px; display: none; z-index: 3000; box-shadow: var(--shadow); }
         
-        @keyframes slideIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .products-container { gap: 12px; padding: 0 10px; }
+            .product-img-wrapper { height: 180px; }
+            .hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -233,7 +236,7 @@
         <section class="about-section">
             <div class="about-content">
                 <h2>من نحن</h2>
-                <p>شركة رائدة في مجال صناعة البن، حيث نمزج الخبرة العريقة بالحب والشغف. هدفنا هو تقديم جودة كوب قهوة استثنائي يساعدك لإكمال يومك بكل طاقة وتركيز، لنكون رفيقك الأمثل في كل صباح.</p>
+                <p>شركة رائدة في مجال صناعة البن، محمصة ومطحونة فريش بدرجة نعومة مثالية. هدفنا تقديم جودة كوب قهوة استثنائي يساعدك لإكمال يومك بكل طاقة وتركيز.</p>
             </div>
             
             <div class="brand-gallery">
@@ -244,7 +247,7 @@
             </div>
         </section>
 
-        <h2 class="section-title">التوليفات الملكية</h2>
+        <h2 class="section-title">القهوة التركي</h2>
 
         <div class="products-container">
             <div class="product-card">
@@ -318,40 +321,59 @@
                 </div>
                 <div class="footer-section" style="text-align: center;">
                     <img src="https://i.postimg.cc/CLjxxZyt/1765277962989.jpg" style="height: 80px; border-radius: 15px; margin-bottom: 15px;">
-                    <p style="justify-content: center; opacity: 0.8;">دار الكيف الملكي - الفخامة في كل رشفة</p>
+                    <p style="justify-content: center; opacity: 0.8;">محمصة ومطحونة فريش</p>
                 </div>
             </div>
-            <p style="font-size: 0.8rem; border-top: 1px solid rgba(197, 160, 89, 0.2); padding-top: 20px;">&copy; 2026 جميع الحقوق محفوظة لدار الكيف الملكي</p>
         </footer>
     </div>
 
     <div id="options-modal">
         <div class="modal-content">
             <h2 id="modal-title">تخصيص طلبك</h2>
+            <p class="modal-subtitle">محمصة ومطحونة فريش بدرجة نعومة مثالية</p>
+            
             <div class="option-group">
-                <label>درجة التحميص</label>
-                <select class="modal-select" id="opt-roast">
-                    <option value="وسط">وسط</option>
-                    <option value="غامق">غامق</option>
+                <label>التحميص والنوع</label>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <select class="modal-select" id="opt-roast">
+                        <option value="وسط">وسط</option>
+                        <option value="غامق">غامق</option>
+                    </select>
+                    <select class="modal-select" id="opt-type">
+                        <option value="ساده">ساده</option>
+                        <option value="محوج">محوج</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <label>نوع القهوة</label>
+                <select class="modal-select" id="opt-grind">
+                    <option value="مطحونة ناعم">مطحونة ناعم</option>
+                    <option value="حبوب كاملة">حبوب كاملة</option>
                 </select>
             </div>
-            <div class="option-group">
-                <label>نوع البن</label>
-                <select class="modal-select" id="opt-type">
-                    <option value="ساده">ساده</option>
-                    <option value="محوج">محوج</option>
-                </select>
-            </div>
+
             <div class="option-group">
                 <label>الوزن</label>
                 <select class="modal-select" id="opt-weight">
-                    <option value="1">١٠٠٠ جم</option>
-                    <option value="0.5">٥٠٠ جم</option>
-                    <option value="0.25">٢٥٠ جم</option>
                     <option value="0.125">١٢٥ جم</option>
+                    <option value="0.25">٢٥٠ جم</option>
+                    <option value="0.5">٥٠٠ جم</option>
+                    <option value="1">١٠٠٠ جم</option>
                 </select>
             </div>
-            <button class="btn-confirm" onclick="store.confirmAdd()" style="margin-top: 10px;">تأكيد الإضافة</button>
+
+            <div class="option-group">
+                <label>الكمية (عدد العبوات)</label>
+                <div class="qty-container">
+                    <button class="qty-btn" onclick="store.updateQty(1)">+</button>
+                    <span id="qty-val">1</span>
+                    <button class="qty-btn" onclick="store.updateQty(-1)">-</button>
+                </div>
+            </div>
+
+            <button class="btn-confirm" onclick="store.confirmAdd()">تأكيد الإضافة للسلة</button>
             <button onclick="store.closeOptions()" style="width:100%; background:none; border:none; color:#888; margin-top:10px; cursor:pointer;">إلغاء</button>
         </div>
     </div>
@@ -374,18 +396,26 @@
         </div>
     </div>
 
-    <div id="toast">تمت إضافة القهوة للسلة بنجاح ☕</div>
+    <div id="toast">تمت الإضافة للسلة بنجاح ☕</div>
 
     <script>
         const store = {
             cart: [],
             shipping: 50,
             tempItem: null,
+            currentQty: 1,
 
             openOptions(name, basePrice) {
                 this.tempItem = { name, basePrice };
+                this.currentQty = 1;
+                document.getElementById('qty-val').innerText = 1;
                 document.getElementById('modal-title').innerText = name;
                 document.getElementById('options-modal').style.display = 'flex';
+            },
+
+            updateQty(val) {
+                this.currentQty = Math.max(1, this.currentQty + val);
+                document.getElementById('qty-val').innerText = this.currentQty;
             },
 
             closeOptions() {
@@ -396,16 +426,19 @@
             confirmAdd() {
                 const roast = document.getElementById('opt-roast').value;
                 const type = document.getElementById('opt-type').value;
+                const grind = document.getElementById('opt-grind').value;
                 const weightFactor = parseFloat(document.getElementById('opt-weight').value);
                 const weightLabel = document.getElementById('opt-weight').options[document.getElementById('opt-weight').selectedIndex].text;
                 
-                const finalPrice = this.tempItem.basePrice * weightFactor;
-                const fullName = `${this.tempItem.name} (${type} - ${roast})`;
+                const unitPrice = this.tempItem.basePrice * weightFactor;
+                const totalPrice = unitPrice * this.currentQty;
+                const fullName = `${this.tempItem.name} (${type} - ${roast} - ${grind})`;
 
                 this.cart.push({ 
                     name: fullName, 
-                    price: finalPrice, 
-                    weight: weightLabel 
+                    price: totalPrice, 
+                    weight: weightLabel,
+                    qty: this.currentQty
                 });
 
                 this.updateUI();
@@ -421,13 +454,13 @@
             },
 
             updateUI() {
-                document.getElementById('cart-count').innerText = this.cart.length;
+                document.getElementById('cart-count').innerText = this.cart.reduce((a, b) => a + b.qty, 0);
             },
 
             showToast() {
                 const toast = document.getElementById('toast');
                 toast.style.display = 'block';
-                setTimeout(() => toast.style.display = 'none', 2500);
+                setTimeout(() => toast.style.display = 'none', 2000);
             },
 
             toggleCheckout(show) {
@@ -439,12 +472,30 @@
 
             renderCart() {
                 const container = document.getElementById('cart-items');
-                let total = 0;
+                let subtotal = 0;
                 let html = this.cart.map((item, i) => {
-                    total += item.price;
-                    return `<div class="item-row"><div><strong>${item.name}</strong><br><small>${item.weight}</small></div><div><span>${item.price} ج.م</span><button class="remove-btn" onclick="store.removeItem(${i})"><i class="fas fa-trash"></i></button></div></div>`;
+                    subtotal += item.price;
+                    return `
+                    <div class="item-row">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <small>${item.weight} × ${item.qty}</small>
+                        </div>
+                        <div>
+                            <span>${item.price} ج.م</span>
+                            <button class="remove-btn" onclick="store.removeItem(${i})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
                 }).join('');
-                html += `<div style="margin-top:20px; padding-top:15px; border-top:2px dashed #ddd;"><div class="item-row"><span>المجموع:</span><span>${total} ج.م</span></div><div class="item-row"><span>الشحن:</span><span>${this.shipping} ج.م</span></div><div class="item-row" style="font-size:1.3rem; color:var(--primary); font-weight:bold;"><span>الإجمالي:</span><span>${total + this.shipping} ج.م</span></div></div>`;
+                
+                html += `
+                <div style="margin-top:20px; padding-top:15px; border-top:2px dashed #ddd;">
+                    <div class="item-row"><span>المجموع:</span><span>${subtotal} ج.م</span></div>
+                    <div class="item-row"><span>الشحن:</span><span>${this.shipping} ج.م</span></div>
+                    <div class="item-row" style="font-size:1.3rem; color:var(--primary); font-weight:bold;">
+                        <span>الإجمالي:</span><span>${subtotal + this.shipping} ج.م</span>
+                    </div>
+                </div>`;
                 container.innerHTML = html;
             },
 
@@ -453,10 +504,11 @@
                 const phone = document.getElementById('user-phone').value.trim();
                 const addr = document.getElementById('user-address').value.trim();
                 if(!name || !phone || !addr) return alert('يرجى ملء جميع البيانات');
-                let orderText = "☕ *طلب جديد - دار الكيف الملكي*\n\n";
+                
+                let orderText = "☕ *طلب جديد من دار الكيف الملكي*\n\n";
                 let total = 0;
                 this.cart.forEach((item, i) => {
-                    orderText += `*${i+1}-* ${item.name} (${item.weight}) ⬅️ ${item.price}ج\n`;
+                    orderText += `*${i+1}-* ${item.name}\n   الكمية: ${item.qty} (${item.weight}) ⬅️ ${item.price}ج\n`;
                     total += item.price;
                 });
                 orderText += `\n------------------\n🚚 *الشحن:* ${this.shipping}ج\n💰 *الإجمالي:* ${total + this.shipping} ج.م\n------------------\n👤 *العميل:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${addr}`;
