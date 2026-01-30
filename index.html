@@ -30,7 +30,7 @@
         /* شريط الإعلانات العلوي */
         .promo-bar {
             background: var(--primary);
-            color: #ffffff; /* تم تغيير اللون للأبيض */
+            color: #ffffff;
             padding: 8px 0;
             font-size: 0.9rem;
             font-weight: bold;
@@ -42,14 +42,14 @@
         .promo-track {
             display: flex;
             white-space: nowrap;
-            animation: marquee 8s linear infinite; /* تم زيادة السرعة إلى 8 ثواني */
+            animation: marquee 8s linear infinite;
         }
         .promo-item {
             padding: 0 40px;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #ffffff; /* التأكيد على لون النص الأبيض */
+            color: #ffffff;
         }
         @keyframes marquee {
             0% { transform: translateX(0); }
@@ -298,7 +298,6 @@
         </section>
 
         <h2 class="section-title">القهوة التركي</h2>
-
         <div class="products-container">
             <div class="product-card">
                 <div class="discount-badge">خصم 30%</div>
@@ -308,7 +307,7 @@
                 </div>
                 <div class="product-info">
                     <h3>توليفة دار الكيف (VIP)</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة دار الكيف VIP', 560)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة دار الكيف VIP', 560, 'turkish')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -322,7 +321,7 @@
                 </div>
                 <div class="product-info">
                     <h3>توليفة ستاندر</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة ستاندر', 400)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة ستاندر', 400, 'turkish')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -336,7 +335,7 @@
                 </div>
                 <div class="product-info">
                     <h3>توليفة Golden</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة Golden', 450)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة Golden', 450, 'turkish')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -350,7 +349,7 @@
                 </div>
                 <div class="product-info">
                     <h3>توليفة THE ONE</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة THE ONE', 700)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة THE ONE', 700, 'turkish')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -363,11 +362,11 @@
                 <div class="discount-badge">حصري</div>
                 <div class="product-img-wrapper">
                     <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
-                    <div class="price-tag-overlay">تبدأ من 75 ج.م <small>(125جم)</small></div>
+                    <div class="price-tag-overlay">تبدأ من 150 ج.م <small>(250جم)</small></div>
                 </div>
                 <div class="product-info">
                     <h3>توليفة إسبريسو مخصوص</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة إسبريسو مخصوص', 600)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة إسبريسو مخصوص', 600, 'espresso')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -377,11 +376,11 @@
                 <div class="discount-badge">الأكثر مبيعاً</div>
                 <div class="product-img-wrapper">
                     <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
-                    <div class="price-tag-overlay">تبدأ من 87.5 ج.م <small>(125جم)</small></div>
+                    <div class="price-tag-overlay">تبدأ من 175 ج.م <small>(250جم)</small></div>
                 </div>
                 <div class="product-info">
                     <h3>إسبريسو دار الكيف الملكي</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('إسبريسو دار الكيف الملكي', 700)">
+                    <button class="btn-add-cart" onclick="store.openOptions('إسبريسو دار الكيف الملكي', 700, 'espresso')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -391,11 +390,11 @@
                 <div class="discount-badge">هندي فاخر</div>
                 <div class="product-img-wrapper">
                     <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
-                    <div class="price-tag-overlay">تبدأ من 105 ج.م <small>(125جم)</small></div>
+                    <div class="price-tag-overlay">تبدأ من 210 ج.م <small>(250جم)</small></div>
                 </div>
                 <div class="product-info">
                     <h3>توليفة هندي</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة هندي إسبريسو', 840)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة هندي إسبريسو', 840, 'espresso')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -405,11 +404,11 @@
                 <div class="discount-badge">إثيوبي أصلي</div>
                 <div class="product-img-wrapper">
                     <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
-                    <div class="price-tag-overlay">تبدأ من 90 ج.م <small>(125جم)</small></div>
+                    <div class="price-tag-overlay">تبدأ من 180 ج.م <small>(250جم)</small></div>
                 </div>
                 <div class="product-info">
                     <h3>توليفة إثيوبي</h3>
-                    <button class="btn-add-cart" onclick="store.openOptions('توليفة إثيوبي إسبريسو', 720)">
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة إثيوبي إسبريسو', 720, 'espresso')">
                         <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
                     </button>
                 </div>
@@ -442,7 +441,7 @@
             <h2 id="modal-title">تخصيص طلبك</h2>
             <p class="modal-subtitle">محمصة ومطحونة فريش بدرجة نعومة مثالية</p>
             
-            <div class="option-group">
+            <div class="option-group" id="grp-roast-type">
                 <label>التحميص والنوع</label>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <select class="modal-select" id="opt-roast">
@@ -457,21 +456,15 @@
             </div>
 
             <div class="option-group">
-                <label>نوع القهوة</label>
+                <label id="lbl-grind">نوع القهوة</label>
                 <select class="modal-select" id="opt-grind">
-                    <option value="مطحونة ناعم">مطحونة ناعم</option>
-                    <option value="حبوب كاملة">حبوب كاملة</option>
-                </select>
+                    </select>
             </div>
 
             <div class="option-group">
                 <label>الوزن</label>
                 <select class="modal-select" id="opt-weight">
-                    <option value="0.125">١٢٥ جم</option>
-                    <option value="0.25">٢٥٠ جم</option>
-                    <option value="0.5">٥٠٠ جم</option>
-                    <option value="1">١٠٠٠ جم</option>
-                </select>
+                    </select>
             </div>
 
             <div class="option-group">
@@ -515,12 +508,51 @@
             freeShippingLimit: 1000,
             tempItem: null,
             currentQty: 1,
+            currentMode: 'turkish',
 
-            openOptions(name, basePrice) {
+            openOptions(name, basePrice, mode) {
                 this.tempItem = { name, basePrice };
                 this.currentQty = 1;
+                this.currentMode = mode;
+                
                 document.getElementById('qty-val').innerText = 1;
                 document.getElementById('modal-title').innerText = name;
+                
+                const roastGroup = document.getElementById('grp-roast-type');
+                const weightSelect = document.getElementById('opt-weight');
+                const grindSelect = document.getElementById('opt-grind');
+                const grindLabel = document.getElementById('lbl-grind');
+
+                if(mode === 'espresso') {
+                    roastGroup.style.display = 'none';
+                    grindLabel.innerText = 'نوع الحبوب';
+                    grindSelect.innerHTML = `
+                        <option value="حبوب كاملة">حبوب كاملة</option>
+                        <option value="موكا بوت">موكا بوت</option>
+                        <option value="فلتر">فلتر</option>
+                        <option value="أمريكان كوفي">أمريكان كوفي</option>
+                        <option value="باسكت مضغوط">باسكت مضغوط</option>
+                    `;
+                    weightSelect.innerHTML = `
+                        <option value="0.25">٢٥٠ جم</option>
+                        <option value="0.5">٥٠٠ جم</option>
+                        <option value="1">١٠٠٠ جم</option>
+                    `;
+                } else {
+                    roastGroup.style.display = 'block';
+                    grindLabel.innerText = 'نوع القهوة';
+                    grindSelect.innerHTML = `
+                        <option value="مطحونة ناعم">مطحونة ناعم</option>
+                        <option value="حبوب كاملة">حبوب كاملة</option>
+                    `;
+                    weightSelect.innerHTML = `
+                        <option value="0.125">١٢٥ جم</option>
+                        <option value="0.25">٢٥٠ جم</option>
+                        <option value="0.5">٥٠٠ جم</option>
+                        <option value="1">١٠٠٠ جم</option>
+                    `;
+                }
+
                 document.getElementById('options-modal').style.display = 'flex';
             },
 
@@ -535,15 +567,21 @@
             },
 
             confirmAdd() {
-                const roast = document.getElementById('opt-roast').value;
-                const type = document.getElementById('opt-type').value;
                 const grind = document.getElementById('opt-grind').value;
                 const weightFactor = parseFloat(document.getElementById('opt-weight').value);
                 const weightLabel = document.getElementById('opt-weight').options[document.getElementById('opt-weight').selectedIndex].text;
                 
+                let fullName = "";
+                if(this.currentMode === 'turkish') {
+                    const roast = document.getElementById('opt-roast').value;
+                    const type = document.getElementById('opt-type').value;
+                    fullName = `${this.tempItem.name} (${type} - ${roast} - ${grind})`;
+                } else {
+                    fullName = `${this.tempItem.name} (طحن: ${grind})`;
+                }
+
                 const unitPrice = this.tempItem.basePrice * weightFactor;
                 const totalPrice = unitPrice * this.currentQty;
-                const fullName = `${this.tempItem.name} (${type} - ${roast} - ${grind})`;
 
                 this.cart.push({ 
                     name: fullName, 
