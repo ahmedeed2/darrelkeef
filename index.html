@@ -126,7 +126,7 @@
 
         /* Products */
         .products-container {
-            max-width: 1100px; margin: 0 auto 80px; padding: 0 15px;
+            max-width: 1100px; margin: 0 auto 40px; padding: 0 15px;
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
         }
 
@@ -206,7 +206,8 @@
         .footer-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: right; margin-bottom: 40px; }
         .footer-section h4 { font-family: 'Amiri', serif; font-size: 1.5rem; margin-bottom: 20px; border-bottom: 1px solid var(--accent); display: inline-block; }
         .footer-section p { color: #d1b894; margin: 10px 0; display: flex; align-items: center; gap: 10px; justify-content: flex-start; }
-        
+        .footer-section a { color: #d1b894; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+
         .whatsapp-float {
             position: fixed; bottom: 30px; left: 30px;
             background: #25d366; color: white;
@@ -356,6 +357,65 @@
             </div>
         </div>
 
+        <h2 class="section-title">توليفات الإسبريسو</h2>
+        <div class="products-container">
+            <div class="product-card">
+                <div class="discount-badge">حصري</div>
+                <div class="product-img-wrapper">
+                    <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
+                    <div class="price-tag-overlay">تبدأ من 75 ج.م <small>(125جم)</small></div>
+                </div>
+                <div class="product-info">
+                    <h3>توليفة إسبريسو مخصوص</h3>
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة إسبريسو مخصوص', 600)">
+                        <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount-badge">الأكثر مبيعاً</div>
+                <div class="product-img-wrapper">
+                    <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
+                    <div class="price-tag-overlay">تبدأ من 87.5 ج.م <small>(125جم)</small></div>
+                </div>
+                <div class="product-info">
+                    <h3>إسبريسو دار الكيف الملكي</h3>
+                    <button class="btn-add-cart" onclick="store.openOptions('إسبريسو دار الكيف الملكي', 700)">
+                        <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount-badge">هندي فاخر</div>
+                <div class="product-img-wrapper">
+                    <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
+                    <div class="price-tag-overlay">تبدأ من 105 ج.م <small>(125جم)</small></div>
+                </div>
+                <div class="product-info">
+                    <h3>توليفة هندي</h3>
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة هندي إسبريسو', 840)">
+                        <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="discount-badge">إثيوبي أصلي</div>
+                <div class="product-img-wrapper">
+                    <img src="https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png" class="product-img">
+                    <div class="price-tag-overlay">تبدأ من 90 ج.م <small>(125جم)</small></div>
+                </div>
+                <div class="product-info">
+                    <h3>توليفة إثيوبي</h3>
+                    <button class="btn-add-cart" onclick="store.openOptions('توليفة إثيوبي إسبريسو', 720)">
+                        <i class="fa-solid fa-plus-circle"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <div class="footer-content">
                 <div class="footer-section">
@@ -367,6 +427,7 @@
                     <h4>ارقام التواصل</h4>
                     <p><i class="fas fa-phone-alt"></i> 01025745353</p>
                     <p><i class="fas fa-phone-alt"></i> 01208218206</p>
+                    <p><a href="https://www.facebook.com/share/18CTbNEzhW/" target="_blank"><i class="fab fa-facebook"></i> صفحة الفيسبوك</a></p>
                 </div>
                 <div class="footer-section" style="text-align: center;">
                     <img src="https://i.postimg.cc/CLjxxZyt/1765277962989.jpg" style="height: 80px; border-radius: 15px; margin-bottom: 15px;">
