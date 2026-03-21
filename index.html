@@ -144,7 +144,6 @@
             font-size: 0.75rem; font-weight: bold; z-index: 5;
         }
 
-        /* تم تعديل ستايل السعر ليظهر في الأسفل */
         .price-display {
             margin-bottom: 12px;
             font-weight: bold;
@@ -527,12 +526,20 @@
 
     <script>
         const store = {
-            cart: [],
+            cart: JSON.parse(localStorage.getItem('darAlkeefCart')) || [],
             shippingCost: 50,
             freeShippingLimit: 1000,
             tempItem: null,
             currentQty: 1,
             currentMode: 'turkish',
+
+            init() {
+                this.updateUI();
+            },
+
+            saveCart() {
+                localStorage.setItem('darAlkeefCart', JSON.stringify(this.cart));
+            },
 
             openOptions(name, basePrice, mode) {
                 this.tempItem = { name, basePrice };
@@ -624,6 +631,7 @@
                     qty: this.currentQty
                 });
 
+                this.saveCart();
                 this.updateUI();
                 this.showToast();
                 this.closeOptions();
@@ -631,6 +639,7 @@
 
             removeItem(index) {
                 this.cart.splice(index, 1);
+                this.saveCart();
                 this.updateUI();
                 if(this.cart.length === 0) this.toggleCheckout(false);
                 else this.renderCart();
@@ -708,6 +717,43 @@
                 
                 orderText += `\n------------------\n🚚 *الشحن:* ${shipping === 0 ? "مجاني" : shipping + " ج.م"}\n💰 *الإجمالي:* ${total + shipping} ج.م\n------------------\n👤 *العميل:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${addr}`;
                 window.open(`https://wa.me/201025745353?text=${encodeURIComponent(orderText)}`, '_blank');
+            }
+        };
+
+        // تشغيل التحديث الأولي عند تحميل الصفحة
+        store.init();
+
+        // --- حل مشكلة زر الرجوع بذكاء ---
+        window.onpopstate = function(event) {
+            if (document.getElementById('checkout-page').style.display === 'block') {
+                store.toggleCheckout(false);
+            } else if (document.getElementById('options-modal').style.display === 'flex') {
+                store.closeOptions();
+            }
+        };
+
+        const originalOpenOptions = store.openOptions;
+        store.openOptions = function(name, basePrice, mode) {
+            history.pushState({view: 'options'}, "");
+            originalOpenOptions.call(this, name, basePrice, mode);
+        };
+
+        const originalToggleCheckout = store.toggleCheckout;
+        store.toggleCheckout = function(show) {
+            if (show) {
+                history.pushState({view: 'checkout'}, "");
+            }
+            originalToggleCheckout.call(this, show);
+        };
+
+        const originalCloseOptions = store.closeOptions;
+        store.closeOptions = function() {
+            if (document.getElementById('options-modal').style.display === 'flex') {
+                if (window.history.state && window.history.state.view === 'options') {
+                    history.back();
+                } else {
+                    originalCloseOptions.call(this);
+                }
             }
         };
     </script>
