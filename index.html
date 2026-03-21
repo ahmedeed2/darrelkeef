@@ -86,14 +86,6 @@
             align-items: center; 
             box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
             position: sticky; 
-            .header-title {
-    flex-grow: 1; 
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
             top: 0; 
             z-index: 1000;
             backdrop-filter: blur(10px);
@@ -108,6 +100,9 @@
             font-weight: 700;
             text-align: center;
             flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .cart-trigger { 
@@ -583,11 +578,19 @@
                 <i class="fas fa-arrow-right"></i> العودة للمتجر
             </button>
             <h2 style="text-align:center; margin-bottom:30px; font-family:'Amiri';">مراجعة طلبك</h2>
+            
             <div id="cart-items" class="summary-list"></div>
-            <input type="text" id="user-name" placeholder="الاسم بالكامل">
-            <input type="tel" id="user-phone" placeholder="رقم الموبايل">
-            <input type="text" id="user-address" placeholder="عنوان التوصيل بالتفصيل">
-            <button class="btn-confirm" onclick="store.checkoutWhatsApp()">إتمام الطلب عبر واتساب <i class="fa-brands fa-whatsapp"></i></button>
+
+            <form action="https://formspree.io/f/mqeyoqap" method="POST" id="checkout-form">
+                <input type="hidden" name="تفاصيل_الطلب" id="hidden-order-details">
+                <input type="hidden" name="إجمالي_المبلغ" id="hidden-total-amount">
+                
+                <input type="text" name="الاسم" id="user-name" placeholder="الاسم بالكامل" required>
+                <input type="tel" name="الهاتف" id="user-phone" placeholder="رقم الموبايل" required>
+                <input type="text" name="العنوان" id="user-address" placeholder="عنوان التوصيل بالتفصيل" required>
+                
+                <button type="submit" class="btn-confirm" onclick="store.prepareForm(event)">تأكيد وطلب الشراء الآن</button>
+            </form>
         </div>
     </div>
 
@@ -798,23 +801,29 @@
                 container.innerHTML = html;
             },
 
-            checkoutWhatsApp() {
+            prepareForm(event) {
                 const name = document.getElementById('user-name').value.trim();
                 const phone = document.getElementById('user-phone').value.trim();
                 const addr = document.getElementById('user-address').value.trim();
-                if(!name || !phone || !addr) return alert('يرجى ملء جميع البيانات');
                 
-                let orderText = "☕ *طلب جديد من دار الكيف الملكي*\n\n";
+                if(!name || !phone || !addr) return; // سيتولى الـ HTML5 التحقق من الإدخال
+
+                let orderDetails = "";
                 let total = 0;
                 this.cart.forEach((item, i) => {
-                    orderText += `*${i+1}-* ${item.name}\n   الكمية: ${item.qty} (${item.weight}) ⬅️ ${item.price}ج\n`;
+                    orderDetails += `${i+1}- ${item.name} (كمية: ${item.qty} | وزن: ${item.weight}) = ${item.price} ج.م \n`;
                     total += item.price;
                 });
-                
+
                 const shipping = total >= this.freeShippingLimit ? 0 : this.shippingCost;
+                const finalTotal = total + shipping;
+
+                // وضع البيانات في الحقول المخفية قبل الإرسال
+                document.getElementById('hidden-order-details').value = orderDetails;
+                document.getElementById('hidden-total-amount').value = `${finalTotal} ج.م (الشحن: ${shipping})`;
                 
-                orderText += `\n------------------\n🚚 *الشحن:* ${shipping === 0 ? "مجاني" : shipping + " ج.م"}\n💰 *الإجمالي:* ${total + shipping} ج.م\n------------------\n👤 *العميل:* ${name}\n📞 *الهاتف:* ${phone}\n📍 *العنوان:* ${addr}`;
-                window.open(`https://wa.me/201025745353?text=${encodeURIComponent(orderText)}`, '_blank');
+                // مسح السلة بعد نجاح الإرسال (اختياري، يفضل عند ظهور صفحة النجاح)
+                // localStorage.removeItem('darAlkeefCart');
             }
         };
 
