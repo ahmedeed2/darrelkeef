@@ -27,6 +27,28 @@
             overflow-x: hidden;
         }
 
+        /* القائمة الجانبية Sidebar */
+        .sidebar {
+            position: fixed; top: 0; right: -280px; width: 280px; height: 100%;
+            background: var(--white); z-index: 2001; transition: var(--transition);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.1); padding: 40px 20px;
+            display: flex; flex-direction: column;
+        }
+        .sidebar.active { right: 0; }
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2000; display: none; backdrop-filter: blur(4px);
+        }
+        .sidebar-header { margin-bottom: 30px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .sidebar-header img { height: 70px; border-radius: 12px; }
+        .side-link {
+            text-decoration: none; color: var(--primary); font-weight: 700;
+            padding: 15px; display: flex; align-items: center; gap: 12px;
+            border-radius: 10px; transition: 0.3s; margin-bottom: 5px;
+        }
+        .side-link:hover { background: #f9f5f0; color: var(--accent); }
+        .side-link i { width: 25px; font-size: 1.2rem; }
+
         /* شريط الإعلانات العلوي */
         .promo-bar {
             background: var(--primary);
@@ -58,21 +80,30 @@
         /* Header & Nav */
         header { 
             background: rgba(255, 255, 255, 0.95); 
-            padding: 10px 5%; 
+            padding: 10px 1%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
             position: sticky; 
+            .header-title {
+    flex-grow: 1; 
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
             top: 0; 
             z-index: 1000;
             backdrop-filter: blur(10px);
         }
-        .logo img { height: 60px; border-radius: 12px; transition: var(--transition); }
+        .menu-trigger { font-size: 1.5rem; color: var(--primary); cursor: pointer; padding: 5px; }
+        .logo img { height: 50px; border-radius: 12px; transition: var(--transition); }
         
         .header-title {
             font-family: 'Amiri', serif;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary);
             font-weight: 700;
             text-align: center;
@@ -82,14 +113,14 @@
         .cart-trigger { 
             position: relative; 
             cursor: pointer; 
-            font-size: 1.6rem; 
+            font-size: 1.5rem; 
             color: var(--primary);
-            padding: 10px;
+            padding: 5px;
         }
         #cart-count { 
-            position: absolute; top: 2px; right: 0; 
+            position: absolute; top: -5px; right: -5px; 
             background: #d35400; color: white; 
-            font-size: 0.7rem; width: 22px; height: 22px;
+            font-size: 0.7rem; width: 20px; height: 20px;
             display: flex; align-items: center; justify-content: center;
             border-radius: 50%; border: 2px solid white; font-weight: bold;
         }
@@ -107,6 +138,7 @@
 
         /* About Section */
         .about-section { max-width: 1100px; margin: 60px auto; padding: 0 20px; text-align: center; }
+        #about-anchor { scroll-margin-top: 100px; }
         .about-content {
             background: white; padding: 40px; border-radius: 30px; box-shadow: var(--shadow);
             border: 1px solid rgba(197, 160, 89, 0.2); margin-bottom: 40px;
@@ -121,7 +153,7 @@
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
         .gallery-item:hover img { transform: scale(1.1); }
 
-        .section-title { text-align: center; margin: 50px 0 30px; font-family: 'Amiri', serif; font-size: 2.8rem; color: var(--primary); }
+        .section-title { text-align: center; margin: 50px 0 30px; font-family: 'Amiri', serif; font-size: 2.8rem; color: var(--primary); scroll-margin-top: 100px; }
 
         /* Products */
         .products-container {
@@ -225,7 +257,13 @@
         .checkout-box { max-width: 550px; margin: 0 auto; background: white; padding: 35px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); }
         .summary-list { margin-bottom: 25px; border-radius: 15px; background: #fffcf8; padding: 15px; }
         .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
-        .remove-btn { color: #ff4757; background: none; border: none; cursor: pointer; padding: 5px; }
+        
+        /* أزرار السلة الجديدة */
+        .cart-qty-ctrl { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+        .cart-qty-btn { width: 25px; height: 25px; border-radius: 5px; border: 1px solid var(--primary); background: white; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .cart-qty-btn:hover { background: var(--primary); color: white; }
+
+        .remove-btn { color: #ff4757; background: none; border: none; cursor: pointer; padding: 5px; font-size: 1.1rem; }
         input { width: 100%; padding: 14px; border: 2px solid #f1f1f1; border-radius: 12px; font-family: 'Cairo'; margin-bottom: 18px; outline: none; }
         input:focus { border-color: var(--accent); }
         .btn-confirm { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: 0.3s; }
@@ -257,6 +295,34 @@
 </head>
 <body>
 
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="https://i.postimg.cc/yNZ8tqM1/1765277962989.jpg" alt="دار الكيف">
+            <h3 style="margin-top:10px; font-family:'Amiri';">دار الكيف الملكي</h3>
+        </div>
+        <nav>
+            <a href="#turkish-section" class="side-link" onclick="toggleMenu()">
+                <i class="fas fa-coffee"></i> القهوة التركي
+            </a>
+            <a href="#espresso-section" class="side-link" onclick="toggleMenu()">
+                <i class="fas fa-mug-hot"></i> توليفات الإسبريسو
+            </a>
+            <a href="#about-anchor" class="side-link" onclick="toggleMenu()">
+                <i class="fas fa-info-circle"></i> من نحن
+            </a>
+            <a href="https://wa.me/201025745353" class="side-link" target="_blank">
+                <i class="fab fa-whatsapp"></i> اتصل بنا (واتساب)
+            </a>
+            <a href="tel:01025745353" class="side-link">
+                <i class="fas fa-phone"></i> اتصل بنا (هاتفياً)
+            </a>
+            <a href="https://www.facebook.com/share/18CTbNEzhW/" class="side-link" target="_blank">
+                <i class="fab fa-facebook"></i> صفحة الفيسبوك
+            </a>
+        </nav>
+    </div>
+
     <div class="promo-bar">
         <div class="promo-track">
             <div class="promo-item"><i class="fas fa-truck-fast"></i> شحن مجاني لأي طلب يتخطى 1000 جنيه </div>
@@ -267,6 +333,9 @@
     </div>
 
     <header>
+        <div class="menu-trigger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
         <div class="logo">
             <img src='https://i.postimg.cc/yNZ8tqM1/1765277962989.jpg' alt="دار الكيف">
         </div>
@@ -283,7 +352,7 @@
             <p>رفاهية البن الأصيل في كل فنجان</p>
         </section>
 
-        <section class="about-section">
+        <section class="about-section" id="about-anchor">
             <div class="about-content">
                 <h2>من نحن</h2>
                 <p>شركة رائدة في مجال صناعة البن، محمصة ومطحونة فريش بدرجة نعومة مثالية. هدفنا تقديم جودة كوب قهوة استثنائي يساعدك لإكمال يومك بكل طاقة وتركيز.</p>
@@ -297,7 +366,7 @@
             </div>
         </section>
 
-        <h2 class="section-title">القهوة التركي</h2>
+        <h2 class="section-title" id="turkish-section">القهوة التركي</h2>
         <div class="products-container">
             <div class="product-card">
                 <div class="discount-badge">خصم 30%</div>
@@ -368,7 +437,7 @@
             </div>
         </div>
 
-        <h2 class="section-title">توليفات الإسبريسو</h2>
+        <h2 class="section-title" id="espresso-section">توليفات الإسبريسو</h2>
         <div class="products-container">
             <div class="product-card">
                 <div class="discount-badge">حصري</div>
@@ -525,6 +594,19 @@
     <div id="toast">تمت الإضافة للسلة بنجاح ☕</div>
 
     <script>
+        // وظائف القائمة الجانبية
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.style.display = 'none';
+            } else {
+                sidebar.classList.add('active');
+                overlay.style.display = 'block';
+            }
+        }
+
         const store = {
             cart: JSON.parse(localStorage.getItem('darAlkeefCart')) || [],
             shippingCost: 50,
@@ -592,6 +674,17 @@
                 this.currentQty = Math.max(1, this.currentQty + val);
                 document.getElementById('qty-val').innerText = this.currentQty;
                 this.updateLivePrice();
+            },
+
+            updateCartItemQty(index, val) {
+                const item = this.cart[index];
+                const unitPrice = item.price / item.qty;
+                item.qty = Math.max(1, item.qty + val);
+                item.price = unitPrice * item.qty;
+                
+                this.saveCart();
+                this.updateUI();
+                this.renderCart();
             },
 
             updateLivePrice() {
@@ -671,10 +764,15 @@
                     <div class="item-row">
                         <div>
                             <strong>${item.name}</strong><br>
-                            <small>${item.weight} × ${item.qty}</small>
+                            <small>${item.weight}</small>
+                            <div class="cart-qty-ctrl">
+                                <button class="cart-qty-btn" onclick="store.updateCartItemQty(${i}, 1)">+</button>
+                                <span>${item.qty}</span>
+                                <button class="cart-qty-btn" onclick="store.updateCartItemQty(${i}, -1)">-</button>
+                            </div>
                         </div>
-                        <div>
-                            <span>${item.price} ج.م</span>
+                        <div style="text-align:left">
+                            <span style="display:block; margin-bottom:5px; font-weight:bold;">${item.price} ج.م</span>
                             <button class="remove-btn" onclick="store.removeItem(${i})"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>`;
@@ -720,15 +818,15 @@
             }
         };
 
-        // تشغيل التحديث الأولي عند تحميل الصفحة
         store.init();
 
-        // --- حل مشكلة زر الرجوع بذكاء ---
         window.onpopstate = function(event) {
             if (document.getElementById('checkout-page').style.display === 'block') {
                 store.toggleCheckout(false);
             } else if (document.getElementById('options-modal').style.display === 'flex') {
                 store.closeOptions();
+            } else if (document.getElementById('sidebar').classList.contains('active')) {
+                toggleMenu();
             }
         };
 
