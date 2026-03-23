@@ -200,20 +200,68 @@
             align-items: center; z-index: 3000; backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: var(--white); width: 90%; max-width: 420px;
+            background: var(--white); width: 95%; max-width: 480px;
             padding: 30px; border-radius: 25px; position: relative;
+            max-height: 90vh; overflow-y: auto;
             animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .modal-content h2 { font-family: 'Amiri', serif; color: var(--primary); margin-bottom: 5px; text-align: center; }
         .modal-subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 20px; }
         
-        .option-group { margin-bottom: 15px; }
-        .option-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--primary); font-size: 0.9rem; }
-        .modal-select { 
-            width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #f0f0f0;
-            font-family: 'Cairo'; background: #fafafa; outline: none; transition: 0.3s;
+        .option-group { margin-bottom: 20px; }
+        .option-group label { display: block; margin-bottom: 12px; font-weight: bold; color: var(--primary); font-size: 0.95rem; }
+
+        /* Grid Selection System */
+        .selection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
-        .modal-select:focus { border-color: var(--accent); }
+        .select-card {
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            gap: 8px;
+        }
+        .select-card span { font-size: 0.95rem; font-weight: bold; color: var(--primary); }
+        .select-card.selected {
+            border-color: var(--accent);
+            background: #fffcf5;
+            transform: scale(1.02);
+        }
+        .select-card.selected span { color: var(--accent); }
+
+        /* Weight Bubbles */
+        .weight-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .weight-bubble {
+            padding: 10px 18px;
+            border-radius: 50px;
+            border: 2px solid #f0f0f0;
+            background: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .weight-bubble.selected {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
 
         /* Quantity Selector */
         .qty-container {
@@ -253,7 +301,6 @@
         .summary-list { margin-bottom: 25px; border-radius: 15px; background: #fffcf8; padding: 15px; }
         .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
         
-        /* أزرار السلة الجديدة */
         .cart-qty-ctrl { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
         .cart-qty-btn { width: 25px; height: 25px; border-radius: 5px; border: 1px solid var(--primary); background: white; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .cart-qty-btn:hover { background: var(--primary); color: white; }
@@ -285,6 +332,7 @@
             .product-img-wrapper { height: 180px; }
             .hero h1 { font-size: 2.2rem; }
             .section-title { font-size: 2rem; }
+            .selection-grid { gap: 8px; }
         }
     </style>
 </head>
@@ -525,33 +573,47 @@
             <h2 id="modal-title">تخصيص طلبك</h2>
             <p class="modal-subtitle">محمصة ومطحونة فريش بدرجة نعومة مثالية</p>
             
-            <div class="option-group" id="grp-roast-type">
-                <label>التحميص والنوع</label>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <select class="modal-select" id="opt-roast">
-                        <option value="وسط">وسط</option>
-                        <option value="غامق">غامق</option>
-                    </select>
-                    <select class="modal-select" id="opt-type">
-                        <option value="ساده">ساده</option>
-                        <option value="محوج">محوج</option>
-                    </select>
+            <div id="grp-roast-type">
+                <div class="option-group">
+                    <label>درجة التحميص</label>
+                    <div class="selection-grid">
+                        <div class="select-card selected" onclick="store.selectOption('roast', 'وسط', this)">
+                            <span>وسط</span>
+                        </div>
+                        <div class="select-card" onclick="store.selectOption('roast', 'غامق', this)">
+                            <span>غامق</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="opt-roast" value="وسط">
+                </div>
+
+                <div class="option-group">
+                    <label>النوع</label>
+                    <div class="selection-grid">
+                        <div class="select-card selected" onclick="store.selectOption('type', 'ساده', this)">
+                            <span>ساده</span>
+                        </div>
+                        <div class="select-card" onclick="store.selectOption('type', 'محوج', this)">
+                            <span>محوج</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="opt-type" value="ساده">
                 </div>
             </div>
 
             <div class="option-group">
-                <label id="lbl-grind">نوع القهوة</label>
-                <select class="modal-select" id="opt-grind">
-                    </select>
+                <label id="lbl-grind">كيف تفضلها؟</label>
+                <div class="selection-grid" id="grind-cards-container"></div>
+                <input type="hidden" id="opt-grind" value="">
             </div>
 
             <div class="option-group">
                 <label style="display: flex; justify-content: space-between;">
-                    الوزن
+                    اختر الوزن
                     <span id="live-price" style="color: #e74c3c; font-weight: bold;"></span>
                 </label>
-                <select class="modal-select" id="opt-weight" onchange="store.updateLivePrice()">
-                </select>
+                <div class="weight-grid" id="weight-bubbles-container"></div>
+                <input type="hidden" id="opt-weight" value="">
             </div>
 
             <div class="option-group">
@@ -597,7 +659,6 @@
     <div id="toast">تمت الإضافة للسلة بنجاح ☕</div>
 
     <script>
-        // وظائف القائمة الجانبية
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -626,6 +687,15 @@
                 localStorage.setItem('darAlkeefCart', JSON.stringify(this.cart));
             },
 
+            // دالة اختيار عامة للكروت المحدثة
+            selectOption(type, value, element) {
+                document.getElementById('opt-' + type).value = value;
+                const parent = element.parentElement;
+                parent.querySelectorAll('.select-card, .weight-bubble').forEach(c => c.classList.remove('selected'));
+                element.classList.add('selected');
+                if(type === 'weight') this.updateLivePrice();
+            },
+
             openOptions(name, basePrice, mode) {
                 this.tempItem = { name, basePrice };
                 this.currentQty = 1;
@@ -635,38 +705,59 @@
                 document.getElementById('modal-title').innerText = name;
                 
                 const roastGroup = document.getElementById('grp-roast-type');
-                const weightSelect = document.getElementById('opt-weight');
-                const grindSelect = document.getElementById('opt-grind');
+                const weightContainer = document.getElementById('weight-bubbles-container');
+                const grindCardsContainer = document.getElementById('grind-cards-container');
                 const grindLabel = document.getElementById('lbl-grind');
+
+                // إعادة تعيين قيم افتراضية
+                document.getElementById('opt-roast').value = 'وسط';
+                document.getElementById('opt-type').value = 'ساده';
 
                 if(mode === 'espresso') {
                     roastGroup.style.display = 'none';
-                    grindLabel.innerText = 'نوع الحبوب';
-                    grindSelect.innerHTML = `
-                        <option value="حبوب كاملة">حبوب كاملة</option>
-                        <option value="موكا بوت">موكا بوت</option>
-                        <option value="فلتر">فلتر</option>
-                        <option value="أمريكان كوفي">أمريكان كوفي</option>
-                        <option value="باسكت مضغوط">باسكت مضغوط</option>
+                    grindLabel.innerText = 'كيف تفضل الحبوب؟';
+                    grindCardsContainer.innerHTML = `
+                        <div class="select-card selected" onclick="store.selectOption('grind', 'حبوب كاملة', this)">
+                            <span>حبوب كاملة</span>
+                        </div>
+                        <div class="select-card" onclick="store.selectOption('grind', 'موكا بوت', this)">
+                            <span>موكا بوت</span>
+                        </div>
+                        <div class="select-card" onclick="store.selectOption('grind', 'فلتر', this)">
+                            <span>فلتر</span>
+                        </div>
+                        <div class="select-card" onclick="store.selectOption('grind', 'إسبريسو ناعم', this)">
+                            <span>باسكت مضغوط</span>
+                        </div>
                     `;
-                    weightSelect.innerHTML = `
-                        <option value="0.25">٢٥٠ جم</option>
-                        <option value="0.5">٥٠٠ جم</option>
-                        <option value="1">١٠٠٠ جم</option>
+                    document.getElementById('opt-grind').value = "حبوب كاملة";
+                    
+                    weightContainer.innerHTML = `
+                        <div class="weight-bubble selected" onclick="store.selectOption('weight', '0.25', this)">٢٥٠ جم</div>
+                        <div class="weight-bubble" onclick="store.selectOption('weight', '0.5', this)">٥٠٠ جم</div>
+                        <div class="weight-bubble" onclick="store.selectOption('weight', '1', this)">١٠٠٠ جم</div>
                     `;
+                    document.getElementById('opt-weight').value = "0.25";
                 } else {
                     roastGroup.style.display = 'block';
                     grindLabel.innerText = 'نوع القهوة';
-                    grindSelect.innerHTML = `
-                        <option value="مطحونة ناعم">مطحونة ناعم</option>
-                        <option value="حبوب كاملة">حبوب كاملة</option>
+                    grindCardsContainer.innerHTML = `
+                        <div class="select-card selected" onclick="store.selectOption('grind', 'مطحونة ناعم', this)">
+                            <span>مطحونة فريش</span>
+                        </div>
+                        <div class="select-card" onclick="store.selectOption('grind', 'حبوب كاملة', this)">
+                            <span>حبوب كاملة</span>
+                        </div>
                     `;
-                    weightSelect.innerHTML = `
-                        <option value="0.125">١٢٥ جم</option>
-                        <option value="0.25">٢٥٠ جم</option>
-                        <option value="0.5">٥٠٠ جم</option>
-                        <option value="1">١٠٠٠ جم</option>
+                    document.getElementById('opt-grind').value = "مطحونة ناعم";
+                    
+                    weightContainer.innerHTML = `
+                        <div class="weight-bubble selected" onclick="store.selectOption('weight', '0.125', this)">١٢٥ جم</div>
+                        <div class="weight-bubble" onclick="store.selectOption('weight', '0.25', this)">٢٥٠ جم</div>
+                        <div class="weight-bubble" onclick="store.selectOption('weight', '0.5', this)">٥٠٠ جم</div>
+                        <div class="weight-bubble" onclick="store.selectOption('weight', '1', this)">١٠٠٠ جم</div>
                     `;
+                    document.getElementById('opt-weight').value = "0.125";
                 }
 
                 document.getElementById('options-modal').style.display = 'flex';
@@ -705,8 +796,12 @@
 
             confirmAdd() {
                 const grind = document.getElementById('opt-grind').value;
-                const weightFactor = parseFloat(document.getElementById('opt-weight').value);
-                const weightLabel = document.getElementById('opt-weight').options[document.getElementById('opt-weight').selectedIndex].text;
+                const weightVal = document.getElementById('opt-weight').value;
+                const weightFactor = parseFloat(weightVal);
+                
+                // الحصول على نص الوزن
+                const weightBubble = document.querySelector(`.weight-bubble.selected`);
+                const weightLabel = weightBubble ? weightBubble.innerText : weightVal;
                 
                 let fullName = "";
                 if(this.currentMode === 'turkish') {
@@ -806,7 +901,7 @@
                 const phone = document.getElementById('user-phone').value.trim();
                 const addr = document.getElementById('user-address').value.trim();
                 
-                if(!name || !phone || !addr) return; // سيتولى الـ HTML5 التحقق من الإدخال
+                if(!name || !phone || !addr) return; 
 
                 let orderDetails = "";
                 let total = 0;
@@ -818,12 +913,8 @@
                 const shipping = total >= this.freeShippingLimit ? 0 : this.shippingCost;
                 const finalTotal = total + shipping;
 
-                // وضع البيانات في الحقول المخفية قبل الإرسال
                 document.getElementById('hidden-order-details').value = orderDetails;
                 document.getElementById('hidden-total-amount').value = `${finalTotal} ج.م (الشحن: ${shipping})`;
-                
-                // مسح السلة بعد نجاح الإرسال (اختياري، يفضل عند ظهور صفحة النجاح)
-                // localStorage.removeItem('darAlkeefCart');
             }
         };
 
