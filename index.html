@@ -1200,6 +1200,272 @@
             .selection-grid-4 { grid-template-columns: 1fr 1fr; }
             .about-content { padding: 30px 20px; }
         }
+
+        /* ============================
+           AI ASSISTANT
+        ============================ */
+        .ai-fab {
+            position: fixed;
+            bottom: 70px; right: 18px;
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c5a059, #9a7a3a);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.35rem;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 20px rgba(197,160,89,0.5);
+            z-index: 1500;
+            transition: var(--transition);
+            animation: aiPulse 2.5s ease infinite;
+        }
+        .ai-fab:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(197,160,89,0.65); }
+        @keyframes aiPulse {
+            0%,100% { box-shadow: 0 6px 20px rgba(197,160,89,0.5); }
+            50%      { box-shadow: 0 6px 32px rgba(197,160,89,0.85), 0 0 0 8px rgba(197,160,89,0.12); }
+        }
+
+        /* AI Chat Panel */
+        #ai-panel {
+            position: fixed;
+            bottom: 130px; right: 14px;
+            width: calc(100vw - 28px);
+            max-width: 360px;
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(197,160,89,0.2);
+            z-index: 1499;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: panelIn 0.4s cubic-bezier(0.16,1,0.3,1);
+            max-height: 72vh;
+        }
+        #ai-panel.open { display: flex; }
+        @keyframes panelIn {
+            from { opacity:0; transform: translateY(20px) scale(0.95); }
+            to   { opacity:1; transform: translateY(0) scale(1); }
+        }
+
+        .ai-panel-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-mid));
+            padding: 16px 18px;
+            display: flex; align-items: center; gap: 12px;
+            flex-shrink: 0;
+        }
+        .ai-avatar {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .ai-header-info { flex: 1; }
+        .ai-header-info h4 {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: 'Amiri', serif;
+        }
+        .ai-header-info span {
+            color: rgba(232,201,138,0.6);
+            font-size: 0.72rem;
+        }
+        .ai-close {
+            background: rgba(255,255,255,0.1);
+            border: none; color: var(--accent-light);
+            width: 30px; height: 30px;
+            border-radius: 50%; cursor: pointer;
+            font-size: 0.85rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition-fast);
+        }
+        .ai-close:hover { background: rgba(255,255,255,0.2); }
+
+        /* Messages area */
+        .ai-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 0;
+        }
+        .ai-messages::-webkit-scrollbar { width: 4px; }
+        .ai-messages::-webkit-scrollbar-thumb { background: rgba(197,160,89,0.3); border-radius: 4px; }
+
+        .ai-bubble {
+            max-width: 88%;
+            padding: 11px 14px;
+            border-radius: 18px;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            animation: bubbleIn 0.3s ease;
+        }
+        @keyframes bubbleIn {
+            from { opacity:0; transform: translateY(8px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+        .ai-bubble.bot {
+            background: var(--cream-dark);
+            color: var(--primary);
+            border-bottom-right-radius: 6px;
+            align-self: flex-start;
+        }
+        .ai-bubble.user {
+            background: var(--primary);
+            color: var(--accent-light);
+            border-bottom-left-radius: 6px;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        /* Quick option chips */
+        .ai-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 2px;
+            align-self: flex-start;
+            max-width: 100%;
+        }
+        .ai-chip {
+            background: white;
+            border: 1.5px solid rgba(197,160,89,0.4);
+            color: var(--primary);
+            padding: 7px 13px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-family: 'Cairo', sans-serif;
+        }
+        .ai-chip:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Product recommendation card inside chat */
+        .ai-rec-card {
+            background: white;
+            border: 1.5px solid rgba(197,160,89,0.25);
+            border-radius: 16px;
+            overflow: hidden;
+            align-self: flex-start;
+            width: 100%;
+            max-width: 260px;
+            animation: bubbleIn 0.3s ease;
+        }
+        .ai-rec-card img {
+            width: 100%; height: 110px;
+            object-fit: cover;
+        }
+        .ai-rec-card-body {
+            padding: 10px 12px 12px;
+        }
+        .ai-rec-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 9px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .ai-rec-card-body h4 {
+            font-size: 0.88rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .ai-rec-card-body p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .ai-rec-price {
+            color: var(--red);
+            font-weight: 900;
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .btn-ai-add {
+            width: 100%;
+            background: var(--primary);
+            color: var(--accent-light);
+            border: none;
+            padding: 9px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+        }
+        .btn-ai-add:hover { background: var(--accent-dark); }
+
+        /* Typing indicator */
+        .ai-typing {
+            display: flex; gap: 5px; align-items: center;
+            padding: 12px 16px;
+            align-self: flex-start;
+        }
+        .ai-typing span {
+            width: 7px; height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: typingDot 1.2s ease infinite;
+        }
+        .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingDot {
+            0%,80%,100% { transform: scale(0.7); opacity:0.4; }
+            40%          { transform: scale(1);   opacity:1; }
+        }
+
+        /* Input row */
+        .ai-input-row {
+            display: flex;
+            gap: 8px;
+            padding: 12px 14px;
+            border-top: 1px solid rgba(197,160,89,0.15);
+            flex-shrink: 0;
+        }
+        .ai-input {
+            flex: 1;
+            border: 1.5px solid rgba(197,160,89,0.25);
+            border-radius: 50px;
+            padding: 9px 14px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            background: var(--cream);
+            color: var(--primary);
+            transition: var(--transition-fast);
+        }
+        .ai-input:focus { border-color: var(--accent); background: white; }
+        .ai-send {
+            width: 38px; height: 38px;
+            background: var(--primary);
+            color: var(--accent-light);
+            border: none; border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+            flex-shrink: 0;
+        }
+        .ai-send:hover { background: var(--accent-dark); }
     </style>
 </head>
 <body>
@@ -1654,6 +1920,32 @@
     <a href="https://wa.me/201025745353" class="whatsapp-float" target="_blank">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- =====================
+         AI ASSISTANT FAB
+    ===================== -->
+    <button class="ai-fab" onclick="aiBot.toggle()" title="مساعد دار الكيف الذكي">
+        ✨
+    </button>
+
+    <!-- =====================
+         AI CHAT PANEL
+    ===================== -->
+    <div id="ai-panel">
+        <div class="ai-panel-header">
+            <div class="ai-avatar">☕</div>
+            <div class="ai-header-info">
+                <h4>مساعد دار الكيف</h4>
+                <span>🟢 متاح الآن · سأرشدك لتوليفتك المثالية</span>
+            </div>
+            <button class="ai-close" onclick="aiBot.toggle()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="ai-messages" id="ai-messages"></div>
+        <div class="ai-input-row">
+            <input class="ai-input" id="ai-input" type="text" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter') aiBot.send()">
+            <button class="ai-send" onclick="aiBot.send()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <!-- =====================
          WISHLIST PAGE
@@ -2188,6 +2480,327 @@
 
     /* ===== BOOT ===== */
     store.init();
+
+    /* ============================
+       AI ASSISTANT BOT
+    ============================ */
+    const aiBot = (() => {
+
+        /* --- Product Catalog for AI --- */
+        const catalog = [
+            {
+                name: 'توليفة دار الكيف VIP',
+                img: 'https://i.postimg.cc/1tNmKNSs/b325abd1-0906-4fe5-85e6-8bafda356ee7-20251209-170206-0000.jpg',
+                basePrice: 560, mode: 'turkish',
+                price: '70 ج.م / 125جم',
+                badge: 'VIP',
+                tags: ['قوي','مركز','بيصحيني','شغل','تركيز','قهوة قوية','مر','عميق','كثيف','مكثف','لازم أصحى','اصحى'],
+                desc: 'طعم قوي ومركز، لمن يحب القهوة تأخذه بشكل كامل. مثالية للفجر الباكر أو قبل يوم العمل الشاق.'
+            },
+            {
+                name: 'توليفة ستاندر',
+                img: 'https://i.postimg.cc/VLzwJhdh/1000203322-imgupscaler-ai-m-s-w-y-4K.png',
+                basePrice: 400, mode: 'turkish',
+                price: '50 ج.م / 125جم',
+                badge: 'ستاندر',
+                tags: ['كريمي','ناعم','خفيف','مع اللبن','مع حليب','بالبن','رقيق','متوازن','مش قوي','يومي','بالصبح','الصبحية'],
+                desc: 'طعم كريمي ناعم ومتوازن، رائعة مع اللبن. الاختيار الأمثل لشاربي القهوة اليومية.'
+            },
+            {
+                name: 'توليفة Golden',
+                img: 'https://i.postimg.cc/28KYSRKF/tsmym-bdwn-ʿnwan-20251218-094826-0000.png',
+                basePrice: 450, mode: 'turkish',
+                price: '56 ج.م / 125جم',
+                badge: 'Golden',
+                tags: ['كلاسيك','تقليدي','زي زمان','عربي','أصيل','بالهيل','محوج','عادي','بيتي','منزلي','طعم جدتي','تراث'],
+                desc: 'توليفة كلاسيكية بنكهة أصيلة وعطر مميز، تعيدك لطعم القهوة التي كانت تصنعها الجدة.'
+            },
+            {
+                name: 'توليفة THE ONE',
+                img: 'https://i.postimg.cc/QNPsTsnT/mtahn-dar-alkyf-almlky-rfahyt-almdhaq-20251209-205225-0000.png',
+                basePrice: 700, mode: 'turkish',
+                price: '87 ج.م / 125جم',
+                badge: 'THE ONE',
+                tags: ['شغل شاق','ليل طويل','سهر','دراسة','امتحانات','تيسي','مش نايم','صحيت مش صاحي','مضطر','أقوى','أقوى واحدة','تنشيط'],
+                desc: 'الأقوى في الكتالوج. مزيج مكثف لليالي الطويلة والعمل المتواصل. واحدة تكفي.'
+            },
+            {
+                name: 'توليفة إسبريسو مخصوص',
+                img: 'https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png',
+                basePrice: 600, mode: 'espresso',
+                price: 'بدءاً من 150 ج.م',
+                badge: 'حصري',
+                tags: ['إسبريسو','شورت','شوت','اسبريسو','قهوة إيطالية','مكينة','موكابوت','فلتر','كافيه','كافيه بيت'],
+                desc: 'توليفة إسبريسو مخصوصة بعناية، تناسب أجهزة الاسبريسو المنزلية والمهنية.'
+            },
+            {
+                name: 'إسبريسو دار الكيف الملكي',
+                img: 'https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png',
+                basePrice: 700, mode: 'espresso',
+                price: 'بدءاً من 175 ج.م',
+                badge: 'الأكثر مبيعاً',
+                tags: ['فلات وايت','لاتيه','لاتيه آرت','كابتشينو','أمريكانو','أسود','مكينة','بريو','نسبريسو','قهوة فاخرة','بريميوم'],
+                desc: 'توليفة الملكي الرائدة للإسبريسو. تعطي كريما ذهبية كثيفة وطعمًا متوازنًا لجميع المشروبات.'
+            },
+            {
+                name: 'توليفة هندي إسبريسو',
+                img: 'https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png',
+                basePrice: 840, mode: 'espresso',
+                price: 'بدءاً من 210 ج.م',
+                badge: 'هندي فاخر',
+                tags: ['هندي','روبوستا','قوي','كافيين عالي','أقوى إسبريسو','مزيج هندي','خاص','نادر','لأهل الذوق'],
+                desc: 'حبوب هندية فاخرة 100%، كافيين مرتفع وطعم داكن عميق. لعشاق الإسبريسو الأصيل.'
+            },
+            {
+                name: 'توليفة إثيوبي إسبريسو',
+                img: 'https://i.postimg.cc/FsyTyVHr/e96dec03-4c8a-488a-8b43-6bdd8392c195-20260130-112338-0000.png',
+                basePrice: 720, mode: 'espresso',
+                price: 'بدءاً من 180 ج.م',
+                badge: 'إثيوبي أصلي',
+                tags: ['فاكهي','حامض','فلوري','إثيوبي','أفريقي','لايت','ناعم','حلو','مختلف','فريد','طعم مميز','حموضة'],
+                desc: 'حبوب إثيوبية أصلية بنكهة فاكهية ومزهرة. لمن يحب تجربة قهوة مختلفة وغير تقليدية.'
+            }
+        ];
+
+        /* --- Conversation state --- */
+        let isOpen    = false;
+        let chatHist  = [];
+        let awaitStep = 'welcome'; // states: welcome, taste, usage, result, freeChat
+
+        /* --- Helpers --- */
+        const msgBox  = () => document.getElementById('ai-messages');
+        const panel   = () => document.getElementById('ai-panel');
+
+        function scrollToBottom() {
+            const m = msgBox();
+            m.scrollTop = m.scrollHeight;
+        }
+
+        function addBubble(text, role='bot') {
+            const div = document.createElement('div');
+            div.className = `ai-bubble ${role}`;
+            div.innerHTML = text;
+            msgBox().appendChild(div);
+            scrollToBottom();
+            return div;
+        }
+
+        function addChips(options) {
+            const wrap = document.createElement('div');
+            wrap.className = 'ai-chips';
+            options.forEach(({ label, val }) => {
+                const btn = document.createElement('button');
+                btn.className = 'ai-chip';
+                btn.textContent = label;
+                btn.onclick = () => { chipSelected(label, val); };
+                wrap.appendChild(btn);
+            });
+            msgBox().appendChild(wrap);
+            scrollToBottom();
+        }
+
+        function addTyping() {
+            const div = document.createElement('div');
+            div.className = 'ai-typing';
+            div.id = 'ai-typing';
+            div.innerHTML = '<span></span><span></span><span></span>';
+            msgBox().appendChild(div);
+            scrollToBottom();
+            return div;
+        }
+
+        function removeTyping() {
+            const t = document.getElementById('ai-typing');
+            if (t) t.remove();
+        }
+
+        function showProductCard(product) {
+            const div = document.createElement('div');
+            div.className = 'ai-rec-card';
+            div.innerHTML = `
+                <img src="${product.img}" alt="${product.name}" loading="lazy">
+                <div class="ai-rec-card-body">
+                    <span class="ai-rec-badge">⭐ ${product.badge}</span>
+                    <h4>${product.name}</h4>
+                    <p>${product.desc}</p>
+                    <span class="ai-rec-price">${product.price}</span>
+                    <button class="btn-ai-add" onclick="store.openOptions('${product.name}',${product.basePrice},'${product.mode}')">
+                        <i class="fas fa-plus-circle"></i> أضف للسلة
+                    </button>
+                </div>`;
+            msgBox().appendChild(div);
+            setTimeout(() => scrollToBottom(), 50);
+        }
+
+        function botSay(html, delay=600) {
+            return new Promise(resolve => {
+                const typing = addTyping();
+                setTimeout(() => {
+                    typing.remove();
+                    addBubble(html, 'bot');
+                    resolve();
+                }, delay);
+            });
+        }
+
+        /* --- Scoring engine --- */
+        function scoreProducts(keywords) {
+            const kw = keywords.toLowerCase();
+            return catalog.map(p => {
+                let score = 0;
+                p.tags.forEach(t => {
+                    if (kw.includes(t)) score += 3;
+                });
+                // partial match bonus
+                p.tags.forEach(t => {
+                    t.split('').forEach(ch => { if (kw.includes(ch) && ch.length > 1) score += 0.1; });
+                });
+                return { ...p, score };
+            }).sort((a,b) => b.score - a.score);
+        }
+
+        /* --- Conversation logic --- */
+        let userTaste   = '';
+        let userUsage   = '';
+
+        async function chipSelected(label, val) {
+            // Disable all chips
+            document.querySelectorAll('.ai-chip').forEach(c => {
+                c.disabled = true;
+                c.style.opacity = '0.5';
+                c.style.cursor = 'default';
+            });
+
+            addBubble(label, 'user');
+
+            if (awaitStep === 'taste') {
+                userTaste = val;
+                awaitStep = 'usage';
+                await botSay('ممتاز! 🙌<br>وبتشرب قهوتك في أي وقت أو مناسبة؟', 700);
+                addChips([
+                    { label: '🌅 الصبح لأصحى', val: 'morning' },
+                    { label: '💼 أثناء الشغل', val: 'work' },
+                    { label: '📚 مذاكرة / سهر', val: 'study' },
+                    { label: '☕ كيف وراحة', val: 'relax' },
+                    { label: '🏠 بيتي مع العيلة', val: 'home' },
+                ]);
+            } else if (awaitStep === 'usage') {
+                userUsage = val;
+                awaitStep = 'result';
+                await recommend(userTaste, userUsage);
+            }
+        }
+
+        async function recommend(taste, usage) {
+            const tasteMap = {
+                strong:   'قوي مركز تركيز كثيف',
+                creamy:   'كريمي ناعم رقيق متوازن',
+                classic:  'كلاسيك تقليدي أصيل عربي',
+                fruity:   'فاكهي حامض حلو مميز',
+                espresso: 'إسبريسو مكينة فلتر موكابوت'
+            };
+            const usageMap = {
+                morning:  'اصحى بيصحيني الصبحية',
+                work:     'شغل تركيز قوي',
+                study:    'سهر دراسة امتحانات ليل طويل',
+                relax:    'كيف بيتي هادي ناعم',
+                home:     'بيتي عيلة تقليدي'
+            };
+            const keywords = (tasteMap[taste] || taste) + ' ' + (usageMap[usage] || usage);
+            const ranked   = scoreProducts(keywords);
+            const top      = ranked[0];
+            const second   = ranked[1];
+
+            await botSay('استنى ثانية وأنا بختارلك 🤔✨', 800);
+            await botSay('بناءً على ذوقك، توصيتي الأولى ليك هي:', 700);
+            showProductCard(top);
+            await new Promise(r => setTimeout(r, 600));
+            await botSay('وكمان ممكن تعجبك:', 600);
+            showProductCard(second);
+            await new Promise(r => setTimeout(r, 600));
+            await botSay('لو عندك أي سؤال تاني أو محتاج مساعدة في اختيار الوزن أو التحضير، قولي! 😊', 700);
+            awaitStep = 'freeChat';
+        }
+
+        async function handleFreeChat(text) {
+            const ranked = scoreProducts(text);
+            if (ranked[0].score > 0) {
+                await botSay(`بناءً على اللي قلته، ده اقتراحي ليك:`, 700);
+                showProductCard(ranked[0]);
+            } else {
+                // Generic helpful replies
+                const lower = text.toLowerCase();
+                if (lower.includes('سعر') || lower.includes('بكام')) {
+                    await botSay(`أسعارنا تبدأ من <b>50 ج.م</b> للـ 125 جم وتوصل لـ <b>87 ج.م</b> حسب التوليفة.<br>الإسبريسو تبدأ من <b>150 ج.م</b> 🎯`, 700);
+                } else if (lower.includes('شحن') || lower.includes('توصيل')) {
+                    await botSay(`🚚 الشحن <b>50 ج.م</b> على أي طلب، و<b>مجاني</b> لأي طلب يتجاوز <b>1000 ج.م</b>!`, 700);
+                } else if (lower.includes('واتساب') || lower.includes('تواصل') || lower.includes('اتصل')) {
+                    await botSay(`يمكنك التواصل معنا على واتساب مباشرةً:<br><a href="https://wa.me/201025745353" style="color:var(--accent-dark);font-weight:700;">📱 01025745353</a>`, 700);
+                } else if (lower.includes('شكر') || lower.includes('ميرسي') || lower.includes('ممتاز')) {
+                    await botSay(`العفو! يسعدنا دائمًا خدمتك ☕ أي حاجة تاني؟`, 500);
+                } else {
+                    await botSay(`مش فاهم قصدك تمام 😅<br>قولي أكتر -- بتحب القهوة <b>قوية، كريمية، كلاسيك</b>؟ أو عاوز نبدأ من الأول؟`, 700);
+                    addChips([
+                        { label: '🔄 ابدأ من الأول', val: 'restart' },
+                        { label: '📞 تواصل واتساب', val: 'whatsapp' },
+                    ]);
+                }
+            }
+        }
+
+        /* --- Toggle panel --- */
+        function toggle() {
+            isOpen = !isOpen;
+            const p = panel();
+            if (isOpen) {
+                p.classList.add('open');
+                if (chatHist.length === 0) startConversation();
+            } else {
+                p.classList.remove('open');
+            }
+        }
+
+        /* --- Start conversation --- */
+        async function startConversation() {
+            await botSay(`أهلاً بيك في <b>دار الكيف الملكي</b>! 👋<br>أنا مساعدك الذكي، هساعدك تلاقي توليفتك المثالية في ثوانٍ ✨`, 600);
+            await botSay(`أولًا، إيه اللي بتدور عليه في طعم القهوة؟`, 900);
+            addChips([
+                { label: '💪 قوي ومركز',    val: 'strong'   },
+                { label: '🥛 كريمي وناعم',  val: 'creamy'   },
+                { label: '🏺 كلاسيك وأصيل', val: 'classic'  },
+                { label: '🍓 فاكهي ومميز',  val: 'fruity'   },
+                { label: '☕ إسبريسو فقط',  val: 'espresso' },
+            ]);
+            awaitStep = 'taste';
+            chatHist.push(1);
+        }
+
+        /* --- Send free text --- */
+        async function send() {
+            const input = document.getElementById('ai-input');
+            const text  = (input.value || '').trim();
+            if (!text) return;
+            input.value = '';
+
+            addBubble(text, 'user');
+
+            if (awaitStep === 'freeChat' || awaitStep === 'welcome') {
+                // check for restart intent
+                if (text.includes('من الأول') || text.includes('ابدأ') || text.toLowerCase() === 'restart') {
+                    msgBox().innerHTML = '';
+                    chatHist = [];
+                    awaitStep = 'welcome';
+                    await startConversation();
+                } else {
+                    await handleFreeChat(text);
+                }
+            } else {
+                await botSay('من فضلك اختر من الخيارات أو اكتب وصف لذوقك 😊', 500);
+            }
+        }
+
+        return { toggle, send };
+    })();
     </script>
 </body>
 </html>
