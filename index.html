@@ -1202,6 +1202,406 @@
         }
 
         /* ============================
+           SUBSCRIPTION SECTION
+        ============================ */
+        .sub-section {
+            max-width: 1100px;
+            margin: 0 auto 20px;
+            padding: 0 15px;
+        }
+        .sub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .sub-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            border: 2px solid rgba(197,160,89,0.15);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .sub-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
+        }
+        .sub-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(197,160,89,0.4); }
+        .sub-card.featured {
+            background: var(--primary);
+            border-color: var(--accent);
+        }
+        .sub-card.featured::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .sub-card.featured .sub-name,
+        .sub-card.featured .sub-price { color: var(--accent-light); }
+        .sub-card.featured .sub-desc { color: rgba(232,201,138,0.7); }
+        .sub-card.featured .sub-feature { color: rgba(232,201,138,0.85); border-color: rgba(197,160,89,0.2); }
+        .sub-card.featured .sub-badge { background: var(--accent); color: var(--primary); }
+
+        .sub-badge {
+            display: inline-block;
+            background: var(--cream-dark);
+            color: var(--accent-dark);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 50px;
+            margin-bottom: 14px;
+            letter-spacing: 0.05em;
+        }
+        .sub-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .sub-name {
+            font-family: 'Amiri', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .sub-price {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--red);
+            margin-bottom: 4px;
+        }
+        .sub-price span { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
+        .sub-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .sub-features { margin-bottom: 18px; }
+        .sub-feature {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(197,160,89,0.1);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .sub-feature i { color: var(--accent); font-size: 0.75rem; flex-shrink: 0; }
+        .btn-subscribe {
+            width: 100%;
+            background: var(--primary);
+            color: var(--accent-light);
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-subscribe:hover { background: var(--accent-dark); }
+        .sub-card.featured .btn-subscribe {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        .sub-card.featured .btn-subscribe:hover { background: var(--accent-light); }
+
+        /* Subscribe Modal */
+        #sub-modal {
+            position: fixed; inset: 0;
+            background: rgba(44,26,14,0.65);
+            display: none; justify-content: center; align-items: flex-end;
+            z-index: 3100;
+            backdrop-filter: blur(8px);
+        }
+        #sub-modal.open { display: flex; }
+        .sub-modal-box {
+            background: var(--cream);
+            width: 100%; max-width: 520px;
+            padding: 28px 24px 32px;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+            max-height: 90vh; overflow-y: auto;
+        }
+        .sub-modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px;
+        }
+        .sub-modal-header h3 {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+        .sub-plan-pill {
+            background: var(--accent);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* ============================
+           LOYALTY PROGRAM
+        ============================ */
+        .loyalty-section {
+            max-width: 1100px;
+            margin: 0 auto 20px;
+            padding: 0 15px;
+        }
+        .loyalty-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%);
+            border-radius: var(--radius-xl);
+            padding: 30px 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .loyalty-card::after {
+            content: '☕';
+            position: absolute;
+            right: -20px; bottom: -20px;
+            font-size: 8rem;
+            opacity: 0.06;
+            line-height: 1;
+        }
+        .loyalty-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.6rem;
+            color: var(--accent-light);
+            margin-bottom: 6px;
+        }
+        .loyalty-sub {
+            color: rgba(232,201,138,0.6);
+            font-size: 0.82rem;
+            margin-bottom: 22px;
+        }
+        /* Points display */
+        .points-display {
+            background: rgba(197,160,89,0.12);
+            border: 1px solid rgba(197,160,89,0.25);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .points-num {
+            font-family: 'Amiri', serif;
+            font-size: 2.8rem;
+            color: var(--accent-light);
+            font-weight: 700;
+            line-height: 1;
+        }
+        .points-label {
+            color: rgba(232,201,138,0.6);
+            font-size: 0.78rem;
+            margin-top: 4px;
+        }
+        .points-equiv {
+            text-align: left;
+        }
+        .points-equiv span {
+            display: block;
+            color: var(--accent-light);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .points-equiv small { color: rgba(232,201,138,0.55); font-size: 0.75rem; }
+
+        /* Progress to next reward */
+        .loyalty-progress-wrap {
+            margin-bottom: 20px;
+        }
+        .loyalty-progress-label {
+            display: flex; justify-content: space-between;
+            color: rgba(232,201,138,0.7);
+            font-size: 0.78rem;
+            margin-bottom: 8px;
+        }
+        .loyalty-track {
+            height: 8px;
+            background: rgba(197,160,89,0.15);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .loyalty-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
+            border-radius: 50px;
+            transition: width 1s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        /* How it works */
+        .loyalty-steps {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .loyalty-step {
+            background: rgba(197,160,89,0.08);
+            border: 1px solid rgba(197,160,89,0.15);
+            border-radius: var(--radius-md);
+            padding: 12px 8px;
+            text-align: center;
+        }
+        .loyalty-step-icon { font-size: 1.4rem; margin-bottom: 6px; }
+        .loyalty-step p { font-size: 0.72rem; color: rgba(232,201,138,0.75); line-height: 1.4; }
+        .loyalty-step strong { color: var(--accent-light); font-size: 0.78rem; display: block; margin-bottom: 3px; }
+
+        /* Redeem tiers */
+        .redeem-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 8px;
+        }
+        .redeem-tier {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(197,160,89,0.2);
+            border-radius: var(--radius-md);
+            padding: 10px 8px;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .redeem-tier.unlocked {
+            background: rgba(197,160,89,0.15);
+            border-color: var(--accent);
+        }
+        .redeem-pts { font-weight: 900; font-size: 1rem; color: var(--accent-light); }
+        .redeem-val { font-size: 0.7rem; color: rgba(232,201,138,0.6); margin: 2px 0; }
+        .redeem-disc { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+        .btn-redeem {
+            margin-top: 8px;
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 50px;
+            border: 1px solid var(--accent);
+            background: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            transition: var(--transition-fast);
+        }
+        .btn-redeem:hover { background: var(--accent); color: var(--primary); }
+        .btn-redeem:disabled { opacity: 0.35; cursor: not-allowed; }
+
+        /* ============================
+           RETURN POLICY
+        ============================ */
+        #policy-page {
+            position: fixed; inset: 0;
+            background: var(--cream);
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            padding: 30px 5% 80px;
+            animation: fadeIn 0.35s ease;
+        }
+        .policy-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .policy-hero {
+            background: var(--primary);
+            border-radius: var(--radius-xl);
+            padding: 30px 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .policy-hero h2 {
+            font-family: 'Amiri', serif;
+            color: var(--accent-light);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+        .policy-hero p { color: rgba(232,201,138,0.65); font-size: 0.85rem; }
+        .policy-block {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(197,160,89,0.12);
+            box-shadow: var(--shadow-sm);
+        }
+        .policy-block-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 12px;
+        }
+        .policy-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .policy-icon.green { background: #e8f5e9; color: var(--green); }
+        .policy-icon.red   { background: #fdecea; color: var(--red); }
+        .policy-icon.gold  { background: #fff8e6; color: var(--accent-dark); }
+        .policy-block-header h4 {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .policy-list { list-style: none; }
+        .policy-list li {
+            padding: 7px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(197,160,89,0.08);
+            display: flex; align-items: flex-start; gap: 8px;
+            line-height: 1.5;
+        }
+        .policy-list li:last-child { border-bottom: none; }
+        .policy-list li i { margin-top: 3px; flex-shrink: 0; }
+        .policy-list li i.green { color: var(--green); }
+        .policy-list li i.red   { color: var(--red); }
+        .policy-list li i.gold  { color: var(--accent); }
+        .policy-cta {
+            background: var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            text-align: center;
+            margin-top: 8px;
+        }
+        .policy-cta p { color: rgba(232,201,138,0.7); font-size: 0.85rem; margin-bottom: 12px; }
+        .btn-wa-policy {
+            background: #25d366; color: white;
+            border: none; padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 700; font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .btn-wa-policy:hover { background: #20b858; }
+
+        /* Footer links row */
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(197,160,89,0.15);
+        }
+        .footer-link-btn {
+            background: rgba(197,160,89,0.08);
+            border: 1px solid rgba(197,160,89,0.2);
+            color: var(--accent-light);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: var(--transition-fast);
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .footer-link-btn:hover { background: rgba(197,160,89,0.18); border-color: var(--accent); }
+
+        /* ============================
            AI ASSISTANT
         ============================ */
         .ai-fab {
@@ -1758,6 +2158,146 @@
                 </div>
         </div>
 
+        <!-- =====================
+             SUBSCRIPTION SECTION
+        ===================== -->
+        <h2 class="section-title scroll-reveal" id="sub-section">اشتراك شهري ☕</h2>
+        <p class="section-subtitle scroll-reveal">Coffee Subscription -- وفّر أكثر، استمتع أكثر</p>
+        <div class="section-divider scroll-reveal"><i class="fas fa-box divider-icon"></i></div>
+
+        <div class="sub-section scroll-reveal">
+            <div class="sub-grid">
+                <!-- Plan 1 -->
+                <div class="sub-card">
+                    <span class="sub-badge">🥉 الاشتراك الأساسي</span>
+                    <span class="sub-icon">📦</span>
+                    <div class="sub-name">باقة الكيف</div>
+                    <div class="sub-price">500 <span>ج.م / شهر</span></div>
+                    <div class="sub-desc">1 كيلو بن فريش يصلك أول كل شهر من توليفتك المفضلة</div>
+                    <div class="sub-features">
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> 1 كجم بن مطحون فريش</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> خصم 10% على سعر القطاعي</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> أولوية التوصيل</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> إلغاء في أي وقت</div>
+                    </div>
+                    <button class="btn-subscribe" onclick="subModal.open('باقة الكيف','500 ج.م / شهر','1 كجم')">
+                        <i class="fas fa-box"></i> اشترك الآن
+                    </button>
+                </div>
+
+                <!-- Plan 2 -- Featured -->
+                <div class="sub-card featured">
+                    <span class="sub-badge">⭐ الأكثر طلباً</span>
+                    <span class="sub-icon">👑</span>
+                    <div class="sub-name">باقة الملكي</div>
+                    <div class="sub-price" style="color:var(--accent-light);">850 <span style="color:rgba(232,201,138,0.6);">ج.م / شهر</span></div>
+                    <div class="sub-desc">2 كيلو بن فريش + هدية شهرية + نقاط مضاعفة</div>
+                    <div class="sub-features">
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> 2 كجم بن مطحون فريش</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> خصم 15% على سعر القطاعي</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> نقاط ولاء × 2 على كل طلب</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> هدية شهرية مفاجئة 🎁</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> شحن مجاني دائماً</div>
+                    </div>
+                    <button class="btn-subscribe" onclick="subModal.open('باقة الملكي','850 ج.م / شهر','2 كجم')">
+                        <i class="fas fa-crown"></i> اشترك في الملكي
+                    </button>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="sub-card">
+                    <span class="sub-badge">🏢 للشركات والمكاتب</span>
+                    <span class="sub-icon">🏢</span>
+                    <div class="sub-name">باقة بيزنس</div>
+                    <div class="sub-price">حسب الطلب</div>
+                    <div class="sub-desc">5 كجم وأكثر شهرياً، مخصصة للشركات والمقاهي بأسعار خاصة</div>
+                    <div class="sub-features">
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> 5+ كجم مخصص</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> خصم يصل لـ 25%</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> فاتورة شهرية</div>
+                        <div class="sub-feature"><i class="fas fa-check-circle"></i> مندوب مخصص لك</div>
+                    </div>
+                    <a href="https://wa.me/201025745353?text=عايز أعرف أكثر عن باقة البيزنس" class="btn-subscribe" style="text-decoration:none; justify-content:center;" target="_blank">
+                        <i class="fab fa-whatsapp"></i> تواصل معنا
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================
+             LOYALTY PROGRAM
+        ===================== -->
+        <h2 class="section-title scroll-reveal" id="loyalty-section">نقاط دار الكيف 🏆</h2>
+        <p class="section-subtitle scroll-reveal">كل جنيه تصرفه = نقطة توصلك لمكافآت حقيقية</p>
+        <div class="section-divider scroll-reveal"><i class="fas fa-star divider-icon"></i></div>
+
+        <div class="loyalty-section scroll-reveal">
+            <div class="loyalty-card">
+                <div class="loyalty-title">رصيد نقاطك</div>
+                <div class="loyalty-sub">اشتر واكسب نقاط تلقائياً مع كل طلب</div>
+
+                <div class="points-display">
+                    <div>
+                        <div class="points-num" id="loyalty-pts-display">0</div>
+                        <div class="points-label">نقطة مجمّعة</div>
+                    </div>
+                    <div class="points-equiv">
+                        <span id="loyalty-equiv-display">0 ج.م</span>
+                        <small>قيمة نقاطك الحالية</small>
+                    </div>
+                </div>
+
+                <div class="loyalty-progress-wrap">
+                    <div class="loyalty-progress-label">
+                        <span>نحو المكافأة القادمة</span>
+                        <span id="loyalty-next-label">500 نقطة = 10% خصم</span>
+                    </div>
+                    <div class="loyalty-track">
+                        <div class="loyalty-fill" id="loyalty-bar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <div class="loyalty-steps">
+                    <div class="loyalty-step">
+                        <div class="loyalty-step-icon">🛒</div>
+                        <strong>اشتري</strong>
+                        <p>كل 10 ج.م = نقطة واحدة</p>
+                    </div>
+                    <div class="loyalty-step">
+                        <div class="loyalty-step-icon">📈</div>
+                        <strong>اجمع</strong>
+                        <p>النقاط تتراكم تلقائياً</p>
+                    </div>
+                    <div class="loyalty-step">
+                        <div class="loyalty-step-icon">🎁</div>
+                        <strong>استبدل</strong>
+                        <p>خصومات فورية على طلبك</p>
+                    </div>
+                </div>
+
+                <div class="redeem-grid" id="redeem-grid">
+                    <div class="redeem-tier" data-pts="500">
+                        <div class="redeem-pts">500</div>
+                        <div class="redeem-val">نقطة</div>
+                        <div class="redeem-disc">خصم 10%</div>
+                        <button class="btn-redeem" onclick="loyalty.redeem(500,'10%')" disabled>استبدل</button>
+                    </div>
+                    <div class="redeem-tier" data-pts="1000">
+                        <div class="redeem-pts">1000</div>
+                        <div class="redeem-val">نقطة</div>
+                        <div class="redeem-disc">خصم 20%</div>
+                        <button class="btn-redeem" onclick="loyalty.redeem(1000,'20%')" disabled>استبدل</button>
+                    </div>
+                    <div class="redeem-tier" data-pts="2000">
+                        <div class="redeem-pts">2000</div>
+                        <div class="redeem-val">نقطة</div>
+                        <div class="redeem-disc">شحن + 25%</div>
+                        <button class="btn-redeem" onclick="loyalty.redeem(2000,'25% + شحن مجاني')" disabled>استبدل</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- FOOTER -->
         <footer>
             <div class="footer-content">
@@ -1775,9 +2315,123 @@
                     </a>
                 </div>
             </div>
+            <div class="footer-links">
+                <button class="footer-link-btn" onclick="pages.openPolicy()">
+                    <i class="fas fa-shield-alt"></i> سياسة الاسترجاع
+                </button>
+                <button class="footer-link-btn" onclick="document.getElementById('sub-section').scrollIntoView({behavior:'smooth'}); pages.closeAll()">
+                    <i class="fas fa-box"></i> الاشتراك الشهري
+                </button>
+                <button class="footer-link-btn" onclick="document.getElementById('loyalty-section').scrollIntoView({behavior:'smooth'}); pages.closeAll()">
+                    <i class="fas fa-star"></i> نقاط الولاء
+                </button>
+            </div>
             <div class="footer-copy">© 2025 دار الكيف الملكي -- جميع الحقوق محفوظة</div>
         </footer>
     </div><!-- end #main-view -->
+
+    <!-- =====================
+         SUBSCRIPTION MODAL
+    ===================== -->
+    <div id="sub-modal">
+        <div class="sub-modal-box">
+            <div class="sub-modal-header">
+                <h3>🎉 تأكيد الاشتراك</h3>
+                <span class="sub-plan-pill" id="sub-modal-plan">باقة الملكي</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:18px; line-height:1.6;">
+                سيتم التواصل معك خلال 24 ساعة لتأكيد بيانات الاشتراك وطريقة الدفع الشهري. أدخل بياناتك وهنكلمك!
+            </p>
+            <div id="sub-summary" style="background:var(--cream-dark); border-radius:var(--radius-md); padding:14px 16px; margin-bottom:18px; font-size:0.88rem; color:var(--primary);"></div>
+            <input class="form-input" id="sub-name" type="text" placeholder="اسمك بالكامل" required>
+            <input class="form-input" id="sub-phone" type="tel" placeholder="رقم الموبايل" required>
+            <input class="form-input" id="sub-blend" type="text" placeholder="التوليفة المفضلة (مثل: VIP / Golden...)" required>
+            <button class="btn-confirm" onclick="subModal.confirm()" style="margin-top:4px;">
+                <i class="fab fa-whatsapp"></i> أرسل طلب الاشتراك على واتساب
+            </button>
+            <button onclick="subModal.close()" style="width:100%; background:none; border:none; color:var(--text-muted); margin-top:12px; cursor:pointer; font-family:'Cairo'; font-size:0.88rem;">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- =====================
+         RETURN POLICY PAGE
+    ===================== -->
+    <div id="policy-page">
+        <div class="policy-box">
+            <button class="checkout-back" onclick="pages.closePolicy()">
+                <i class="fas fa-arrow-right"></i> العودة للمتجر
+            </button>
+            <div class="policy-hero">
+                <h2>🛡️ سياسة الاسترجاع والاستبدال</h2>
+                <p>نلتزم بثقتك -- إذا مش راضي، هنحل المشكلة</p>
+            </div>
+
+            <!-- ما يُقبل -->
+            <div class="policy-block">
+                <div class="policy-block-header">
+                    <div class="policy-icon green"><i class="fas fa-check"></i></div>
+                    <h4>حالات الاسترجاع المقبولة ✅</h4>
+                </div>
+                <ul class="policy-list">
+                    <li><i class="fas fa-circle-check green"></i> المنتج وصل تالف أو غير سليم</li>
+                    <li><i class="fas fa-circle-check green"></i> وصلك منتج مختلف عن الذي طلبته</li>
+                    <li><i class="fas fa-circle-check green"></i> الكمية وصلت ناقصة عن الطلب</li>
+                    <li><i class="fas fa-circle-check green"></i> جودة المنتج لا تتطابق مع الوصف</li>
+                    <li><i class="fas fa-circle-check green"></i> طلب خلال 48 ساعة من الاستلام</li>
+                </ul>
+            </div>
+
+            <!-- ما لا يُقبل -->
+            <div class="policy-block">
+                <div class="policy-block-header">
+                    <div class="policy-icon red"><i class="fas fa-times"></i></div>
+                    <h4>حالات لا يُقبل فيها الاسترجاع ❌</h4>
+                </div>
+                <ul class="policy-list">
+                    <li><i class="fas fa-circle-xmark red"></i> تم فتح التعبئة واستخدام المنتج جزئياً</li>
+                    <li><i class="fas fa-circle-xmark red"></i> مرور أكثر من 48 ساعة على الاستلام</li>
+                    <li><i class="fas fa-circle-xmark red"></i> تغيير الرأي بعد استلام الطلب</li>
+                    <li><i class="fas fa-circle-xmark red"></i> الطلبات المخصصة (اشتراك شهري مُفعّل)</li>
+                </ul>
+            </div>
+
+            <!-- إجراءات الاسترجاع -->
+            <div class="policy-block">
+                <div class="policy-block-header">
+                    <div class="policy-icon gold"><i class="fas fa-rotate-left"></i></div>
+                    <h4>خطوات الاسترجاع 🔄</h4>
+                </div>
+                <ul class="policy-list">
+                    <li><i class="fas fa-circle gold"></i> تواصل معنا على واتساب خلال 48 ساعة من الاستلام</li>
+                    <li><i class="fas fa-circle gold"></i> أرسل صورة للمنتج وبيان المشكلة</li>
+                    <li><i class="fas fa-circle gold"></i> سيتم مراجعة الطلب خلال 24 ساعة</li>
+                    <li><i class="fas fa-circle gold"></i> في حال القبول: استرجاع كامل أو إعادة شحن فوراً</li>
+                    <li><i class="fas fa-circle gold"></i> يُضاف رصيد للمحفظة أو استرجاع نقود كاملة</li>
+                </ul>
+            </div>
+
+            <!-- ضمان الجودة -->
+            <div class="policy-block" style="border-color:rgba(197,160,89,0.3); background:linear-gradient(135deg,#fffcf3,#fff8e6);">
+                <div class="policy-block-header">
+                    <div class="policy-icon gold"><i class="fas fa-award"></i></div>
+                    <h4>ضمان جودة دار الكيف ⭐</h4>
+                </div>
+                <ul class="policy-list">
+                    <li><i class="fas fa-star gold"></i> كل بن يُحمّص ويُطحن يومياً بدرجة حرارة مضبوطة</li>
+                    <li><i class="fas fa-star gold"></i> نسبة رضا عملائنا 98% خلال آخر سنة</li>
+                    <li><i class="fas fa-star gold"></i> نضمن الوزن الدقيق لكل طلب</li>
+                    <li><i class="fas fa-star gold"></i> تعبئة محكمة تحافظ على النكهة لأطول فترة</li>
+                </ul>
+            </div>
+
+            <div class="policy-cta">
+                <p>عندك مشكلة أو استفسار؟ تواصل معنا مباشرةً على واتساب وهنحل كل حاجة في دقائق</p>
+                <a href="https://wa.me/201025745353?text=عندي مشكلة في طلبي وعايز أسترجعه" class="btn-wa-policy" target="_blank">
+                    <i class="fab fa-whatsapp"></i> تواصل معنا الآن
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- =====================
          BOTTOM NAV
@@ -2480,6 +3134,163 @@
 
     /* ===== BOOT ===== */
     store.init();
+
+    /* ============================
+       SUBSCRIPTION MODAL
+    ============================ */
+    const subModal = (() => {
+        let currentPlan = '';
+        let currentPrice = '';
+        let currentWeight = '';
+
+        function open(plan, price, weight) {
+            currentPlan = plan;
+            currentPrice = price;
+            currentWeight = weight;
+            document.getElementById('sub-modal-plan').textContent = plan;
+            document.getElementById('sub-summary').innerHTML =
+                `📦 <b>${plan}</b> -- ${weight} شهرياً<br>💰 السعر: <b>${price}</b><br>🚚 التوصيل كل أول الشهر`;
+            document.getElementById('sub-modal').classList.add('open');
+        }
+
+        function close() {
+            document.getElementById('sub-modal').classList.remove('open');
+        }
+
+        function confirm() {
+            const name  = document.getElementById('sub-name').value.trim();
+            const phone = document.getElementById('sub-phone').value.trim();
+            const blend = document.getElementById('sub-blend').value.trim();
+            if (!name || !phone || !blend) { alert('من فضلك أكمل بياناتك'); return; }
+            const msg = encodeURIComponent(
+                `مرحباً دار الكيف 👋\nعايز أشترك في *${currentPlan}*\n\n` +
+                `الاسم: ${name}\nالموبايل: ${phone}\nالتوليفة: ${blend}\n\n` +
+                `الباقة: ${currentWeight} شهرياً -- ${currentPrice}`
+            );
+            window.open(`https://wa.me/201025745353?text=${msg}`, '_blank');
+            close();
+            store.showToast('تم إرسال طلب الاشتراك! ✅');
+        }
+
+        // Close on backdrop click
+        document.getElementById('sub-modal').addEventListener('click', e => {
+            if (e.target === document.getElementById('sub-modal')) close();
+        });
+
+        return { open, close, confirm };
+    })();
+
+    /* ============================
+       LOYALTY PROGRAM
+    ============================ */
+    const loyalty = (() => {
+        const RATE        = 10;   // 10 ج.م = 1 نقطة
+        const POINT_VALUE = 0.1;  // كل نقطة = 0.1 ج.م
+        const TIERS = [
+            { pts: 500,  disc: '10%' },
+            { pts: 1000, disc: '20%' },
+            { pts: 2000, disc: '25% + شحن مجاني' },
+        ];
+
+        function getPoints() {
+            return parseInt(localStorage.getItem('darAlkeefPoints') || '0');
+        }
+        function setPoints(n) {
+            localStorage.setItem('darAlkeefPoints', Math.max(0, n));
+        }
+        function addPoints(orderTotal) {
+            const earned = Math.floor(orderTotal / RATE);
+            setPoints(getPoints() + earned);
+            updateUI();
+            return earned;
+        }
+        function updateUI() {
+            const pts  = getPoints();
+            const equiv = (pts * POINT_VALUE).toFixed(0);
+            const el1  = document.getElementById('loyalty-pts-display');
+            const el2  = document.getElementById('loyalty-equiv-display');
+            if (el1) el1.textContent = pts.toLocaleString('ar-EG');
+            if (el2) el2.textContent = equiv + ' ج.م';
+
+            // Progress bar -- aim for next tier
+            const nextTier = TIERS.find(t => t.pts > pts) || TIERS[TIERS.length - 1];
+            const prevPts  = TIERS.find(t => t.pts <= pts) ? pts : 0;
+            const pct      = Math.min(100, (pts / nextTier.pts) * 100);
+            const bar      = document.getElementById('loyalty-bar');
+            const lbl      = document.getElementById('loyalty-next-label');
+            if (bar) bar.style.width = pct + '%';
+            if (lbl) lbl.textContent = `${nextTier.pts} نقطة = ${nextTier.disc}`;
+
+            // Unlock redeem buttons
+            document.querySelectorAll('.redeem-tier').forEach(tile => {
+                const required = parseInt(tile.dataset.pts);
+                const btn      = tile.querySelector('.btn-redeem');
+                if (pts >= required) {
+                    tile.classList.add('unlocked');
+                    if (btn) btn.disabled = false;
+                } else {
+                    tile.classList.remove('unlocked');
+                    if (btn) btn.disabled = true;
+                }
+            });
+        }
+
+        function redeem(ptsRequired, discLabel) {
+            const pts = getPoints();
+            if (pts < ptsRequired) { alert('نقاطك غير كافية'); return; }
+            if (!confirm(`هتستخدم ${ptsRequired} نقطة مقابل خصم ${discLabel}؟`)) return;
+            setPoints(pts - ptsRequired);
+            updateUI();
+            store.showToast(`تم الاستبدال! خصم ${discLabel} مفعّل على طلبك التالي 🎉`);
+        }
+
+        return { getPoints, addPoints, updateUI, redeem };
+    })();
+
+    /* ============================
+       PAGE NAVIGATION HELPER
+    ============================ */
+    const pages = {
+        openPolicy() {
+            closeAllPanels();
+            document.getElementById('main-view').style.display    = 'none';
+            document.getElementById('policy-page').style.display  = 'block';
+            document.getElementById('wishlist-page').style.display = 'none';
+            document.getElementById('checkout-page').style.display = 'none';
+            window.scrollTo(0,0);
+        },
+        closePolicy() {
+            document.getElementById('policy-page').style.display = 'none';
+            document.getElementById('main-view').style.display   = 'block';
+        },
+        closeAll() {
+            document.getElementById('policy-page').style.display  = 'none';
+            document.getElementById('wishlist-page').style.display = 'none';
+            document.getElementById('checkout-page').style.display = 'none';
+            document.getElementById('main-view').style.display    = 'block';
+        }
+    };
+
+    /* ============================
+       HOOK: earn points on order confirm
+    ============================ */
+    (function patchStoreForLoyalty() {
+        const origConfirmAdd = store.confirmAdd.bind(store);
+        store.confirmAdd = function() {
+            origConfirmAdd();
+            // Points earned after adding -- use last added item price
+            const last = this.cart[this.cart.length - 1];
+            if (last) {
+                const earned = loyalty.addPoints(last.price);
+                if (earned > 0) {
+                    setTimeout(() => store.showToast(`🏆 كسبت ${earned} نقطة ولاء!`), 2300);
+                }
+            }
+        };
+    })();
+
+    /* Init loyalty UI */
+    loyalty.updateUI();
 
     /* ============================
        AI ASSISTANT BOT
