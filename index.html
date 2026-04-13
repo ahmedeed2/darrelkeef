@@ -2719,6 +2719,7 @@
         const overlay = document.getElementById('sidebarOverlay');
         const isOpen  = sidebar.classList.toggle('active');
         overlay.style.display = isOpen ? 'block' : 'none';
+        if (isOpen) history.pushState({ page: 'sidebar' }, '', '#menu');
     }
 
     function toggleCart() {
@@ -2726,7 +2727,7 @@
         const overlay = document.getElementById('sidebarOverlay');
         const isOpen  = cart.classList.toggle('active');
         overlay.style.display = isOpen ? 'block' : 'none';
-        if (isOpen) store.renderCart('side-cart-items');
+        if (isOpen) { store.renderCart('side-cart-items'); history.pushState({ page: 'cart' }, '', '#cart'); }
     }
 
     function closeAllPanels() {
@@ -2814,7 +2815,7 @@
             document.getElementById('main-view').style.display      = show ? 'none' : 'block';
             document.getElementById('wishlist-page').style.display  = show ? 'block' : 'none';
             document.getElementById('checkout-page').style.display  = 'none';
-            if (show) { window.scrollTo(0,0); this.renderWishlist(); }
+            if (show) { window.scrollTo(0,0); this.renderWishlist(); history.pushState({ page: 'wishlist' }, '', '#wishlist'); }
         },
 
         /* --- Render Wishlist Page --- */
@@ -2938,6 +2939,7 @@
 
             document.getElementById('options-modal').style.display = 'flex';
             this.updateLivePrice();
+            history.pushState({ page: 'options' }, '', '#options');
         },
 
         /* --- Quantity --- */
@@ -3082,7 +3084,7 @@
             document.getElementById('main-view').style.display     = show ? 'none' : 'block';
             document.getElementById('checkout-page').style.display = show ? 'block' : 'none';
             document.getElementById('wishlist-page').style.display = 'none';
-            if (show) { window.scrollTo(0,0); this.renderCart('cart-items'); }
+            if (show) { window.scrollTo(0,0); this.renderCart('cart-items'); history.pushState({ page: 'checkout' }, '', '#checkout'); }
         },
 
         /* --- Prepare Form Before Submit --- */
@@ -3258,6 +3260,7 @@
             document.getElementById('wishlist-page').style.display = 'none';
             document.getElementById('checkout-page').style.display = 'none';
             window.scrollTo(0,0);
+            history.pushState({ page: 'policy' }, '', '#policy');
         },
         closePolicy() {
             document.getElementById('policy-page').style.display = 'none';
@@ -3270,6 +3273,59 @@
             document.getElementById('main-view').style.display    = 'block';
         }
     };
+
+    /* ============================
+       BACK BUTTON HANDLER (Mobile)
+    ============================ */
+    window.addEventListener('popstate', function(e) {
+        // Close any open panel or overlay page when user presses back
+        const sideCart = document.getElementById('sideCart');
+        const sidebar  = document.getElementById('sidebar');
+        const policyPage   = document.getElementById('policy-page');
+        const checkoutPage = document.getElementById('checkout-page');
+        const wishlistPage = document.getElementById('wishlist-page');
+        const optionsModal = document.getElementById('options-modal');
+        const subModal     = document.getElementById('sub-modal');
+
+        if (optionsModal && optionsModal.style.display === 'flex') {
+            store.closeOptions();
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+        if (subModal && subModal.classList.contains('open')) {
+            subModal.classList.remove('open');
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+        if (sideCart && sideCart.classList.contains('active')) {
+            closeAllPanels();
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+        if (sidebar && sidebar.classList.contains('active')) {
+            closeAllPanels();
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+        if (policyPage && policyPage.style.display === 'block') {
+            pages.closePolicy();
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+        if (checkoutPage && checkoutPage.style.display === 'block') {
+            store.toggleCheckout(false);
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+        if (wishlistPage && wishlistPage.style.display === 'block') {
+            store.toggleWishlist(false);
+            history.pushState({ page: 'home' }, '', '#');
+            return;
+        }
+    });
+
+    // Push initial state so back button works from inner pages
+    history.replaceState({ page: 'home' }, '', '#');
 
     /* ============================
        HOOK: earn points on order confirm
@@ -3523,10 +3579,10 @@
             const second   = ranked[1];
 
             await botSay('استنى ثانية وأنا بختارلك 🤔✨', 800);
-            await botSay('بناءً على ذوقك، توصيتي الأولى ليك هي:', 700);
+            await botSay(`بناءً على ذوقك، توصيتي الأولى ليك هي <b>${top.name}</b> ⭐`, 700);
             showProductCard(top);
             await new Promise(r => setTimeout(r, 600));
-            await botSay('وكمان ممكن تعجبك:', 600);
+            await botSay(`وكمان ممكن تعجبك <b>${second.name}</b>:`, 600);
             showProductCard(second);
             await new Promise(r => setTimeout(r, 600));
             await botSay('لو عندك أي سؤال تاني أو محتاج مساعدة في اختيار الوزن أو التحضير، قولي! 😊', 700);
@@ -3536,7 +3592,7 @@
         async function handleFreeChat(text) {
             const ranked = scoreProducts(text);
             if (ranked[0].score > 0) {
-                await botSay(`بناءً على اللي قلته، ده اقتراحي ليك:`, 700);
+                await botSay(`بناءً على اللي قلته، اقتراحي ليك هو <b>${ranked[0].name}</b>:`, 700);
                 showProductCard(ranked[0]);
             } else {
                 // Generic helpful replies
